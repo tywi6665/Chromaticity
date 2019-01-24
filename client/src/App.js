@@ -1,50 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Intro from "./pages/Intro";
+import Main from "./pages/Main";
+import Saved from "./pages/Saved";
 import './App.css';
-// import API from "./utils/API";
 
-
-class App extends Component {
-
-  state = {
-    photos: [],
-    hexSearch: "",
-    hex: "",
-    namedSearch: ""
-  }
-
-  componentDidMount() {
-    const color = "fb3d71"
-    this.loadPhotos(color);
-  };
-
-  loadPhotos = color => {
-    fetch("api/shutterstock/" + color)
-        .then(res => res.json())
-        .then(res => this.setState({ photos: res.data }))
-        .catch(err => console.log(err));
-  }
-
-
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <Router>
+    <div>
+      <Switch>
+        <Route exact path="/" component={Intro} />
+        <Route exact path="/main" component={Main} />
+        <Route exact path="/saved" component={Saved} />
+      </Switch>
+    </div>
+  </Router>
+)
 
 export default App;
