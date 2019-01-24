@@ -2,6 +2,10 @@
   "name": "chromaticity",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.4.1",
+    "node": "10.10.0"
+  },
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "axios": "^0.16.2",
