@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import API from "./utils/API";
+
 
 class App extends Component {
+
+  state = {
+    photos: [],
+    hexSearch: "",
+    hex: "",
+    namedSearch: ""
+  }
+
+  componentDidMount() {
+    const color = "fb3d71"
+    this.loadPhotos(color);
+  };
+
+  loadPhotos = color => {
+    API.getPhotos(color)
+        .then(res => this.setState({ photos: res.data.data }))
+        .catch(err => console.log(err));
+  }
+
+
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>

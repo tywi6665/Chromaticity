@@ -7,13 +7,14 @@ require("dotenv").config();
 
 // routes
 router.get("/shutterstock/:color", function (req, res) {
-
+    
     var api = shutterstock.v2({
         clientId: keys.shutterstock.clientId,
         clientSecret: keys.shutterstock.clientSecret
     });
 
     api.image.search({ color: req.params.color }, function (err, data) {
+        // console.log(data)
         if (err) throw err;
         return res.json(data);
     });
