@@ -6,7 +6,7 @@
     "npm": "6.4.1",
     "node": "10.10.0"
   },
-  
+  "proxy": "http://localhost:3001/",
   "dependencies": {
     "axios": "^0.16.2",
     "color-convert": "^1.9.3",

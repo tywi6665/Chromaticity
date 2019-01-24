@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import API from "./utils/API";
+// import API from "./utils/API";
 
 
 class App extends Component {
@@ -18,8 +18,9 @@ class App extends Component {
   };
 
   loadPhotos = color => {
-    API.getPhotos(color)
-        .then(res => this.setState({ photos: res.data.data }))
+    fetch("api/shutterstock/" + color)
+        .then(res => res.json())
+        .then(res => this.setState({ photos: res.data }))
         .catch(err => console.log(err));
   }
 
