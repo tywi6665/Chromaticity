@@ -1,5 +1,5 @@
 .container {
-    width: 50%;
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,4 +11,10 @@
     border-radius: 25px;
     padding: 6%;
     margin-top: 5%;
+}
+
+@media only screen and (max-width: 940px) {
+    .container {
+        flex-direction: column;
+    }
 }

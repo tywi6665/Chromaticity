@@ -68,7 +68,7 @@ class Saved extends Component {
     }
 
     handleFileUpload = event => {
-        console.log(event.target)
+        console.log(event.target.files)
         this.setState({
             file: event.target.files,
             src: event.target.files[0].name
@@ -79,39 +79,44 @@ class Saved extends Component {
         event.preventDefault();
         const formData = new FormData();
         formData.file = (this.state.file[0]);
-        console.log(formData)   
+        console.log(formData)
+        // fetch("api/upload", formData, {
+        //     method: "post"
+        // })
+        // .then(res => console.log(res))
+        // .catch(err => console.log(err));   
         API.uploadPhoto(formData)
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
 
-    imageClick = event => {
-        const src = event.target.getAttribute("src");
-        const id = event.target.getAttribute("id");
-        this.setState({
-            // photos: [{
-            //             display: false
-            //         }],
-            colors: [],
-            src: src
-        });
-        // for (let i = 0; i < this.state.photos.length; i++) {
-        //     console.log(i);
-        //     if (id == this.state.photos[i].id) {
-        //         this.setState({
-        //             display : false
-        //         })
-        //     }
-        //     return
-        // }
-    };
+    // imageClick = event => {
+    //     const src = event.target.getAttribute("src");
+    //     const id = event.target.getAttribute("id");
+    //     this.setState({
+    //         // photos: [{
+    //         //             display: false
+    //         //         }],
+    //         colors: [],
+    //         src: src
+    //     });
+    //     // for (let i = 0; i < this.state.photos.length; i++) {
+    //     //     console.log(i);
+    //     //     if (id == this.state.photos[i].id) {
+    //     //         this.setState({
+    //     //             display : false
+    //     //         })
+    //     //     }
+    //     //     return
+    //     // }
+    // };
 
     render () {
         return (
             <Fragment>
                 <Nav />
                 <Container>
-                    <form ref="uploadForm" onSubmit={this.handleFormSubmit}>
+                    <form ref="uploadForm" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
                         <h6>Upload Photos</h6>
                         <Card 
                             type="file"
