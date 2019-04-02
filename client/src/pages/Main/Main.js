@@ -81,7 +81,9 @@ class Main extends Component {
                     </form>
                     </Container>
                     <Container>
+                        
                         <PhotoList>
+                             
                             {this.state.photos.map(photo => (
                                 <div className="images" key={photo.id}>
                                     <img src={photo.assets.huge_thumb.url} alt={photo.description} />
