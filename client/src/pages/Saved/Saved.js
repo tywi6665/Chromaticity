@@ -90,16 +90,14 @@ class Saved extends Component {
             .catch(err => console.log(err));
     };
 
-    // imageClick = event => {
-    //     const src = event.target.getAttribute("src");
-    //     const id = event.target.getAttribute("id");
-    //     this.setState({
-    //         // photos: [{
-    //         //             display: false
-    //         //         }],
-    //         colors: [],
-    //         src: src
-    //     });
+    imageClick = event => {
+        console.log(event.target)
+        const src = event.target.getAttribute("src");
+        const id = event.target.getAttribute("id");
+        this.setState({
+            colors: [],
+            src: src
+        });
     //     // for (let i = 0; i < this.state.photos.length; i++) {
     //     //     console.log(i);
     //     //     if (id == this.state.photos[i].id) {
@@ -109,7 +107,7 @@ class Saved extends Component {
     //     //     }
     //     //     return
     //     // }
-    // };
+    };
 
     render () {
         return (

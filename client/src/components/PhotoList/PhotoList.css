@@ -10,8 +10,8 @@ img {
 }
 
 .images {
-    width: 275px;
-    height: 275px;
+    width: 250px;
+    height: 250px;
     margin: 15px;
     box-shadow: 5px 5px 15px gray;
 }
