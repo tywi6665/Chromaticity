@@ -3,23 +3,33 @@ import "./Canvas.css";
 import * as d3 from "d3";
 
 class Canvas extends Component {
-   state = {
-       hexSearch: ""
-   } 
+    constructor() {
+        super();
+        this.state = {
+            hexSearch: "",
+            width: window.innerWidth
+        };
+        this.updateDimensions = this.updateDimensions.bind(this);
+    };
 
-   that=this;
+    that = this;
     render() {
-        
+
         return (
             <pre>
-                <canvas onClick={() => this.props.setColor(this.state.hexSearch)} className="canvas u-full-width" id="canvas1"/>
+                <canvas onClick={() => this.props.setColor(this.state.hexSearch)} className="canvas u-full-width" id="canvas1" />
             </pre>
         )
 
     }
 
+    // componentWillMount() {
+    //     this.updateDimensions();
+    // }
+
     componentDidMount() {
         this.ColorWheel();
+        window.addEventListener("resize", this.updateDimensions);
         var self = this;
         var canvas = document.getElementById("canvas1");
 
@@ -57,22 +67,25 @@ class Canvas extends Component {
             var pixelData = context.getImageData(eventLocation.x, eventLocation.y, 1, 1).data;
 
             var hex = ("000000" + rgbToHex(pixelData[0], pixelData[1], pixelData[2])).slice(-6);
-            console.log(hex)
             self.setState({ hexSearch: hex });
         });
 
     };
 
-    ColorWheel() {
+    updateDimensions() {
+        this.setState({ width: window.innerWidth })
+        this.ColorWheel()
+    }
 
+    ColorWheel() {
         var degreePerRadian = 180 / Math.PI;
-        const width = 500;
-        const height = 500;
-        
+        const width = 0.45 * this.state.width;
+        const height = 0.45 * this.state.width;
+
         const canvas = d3.select("canvas")
             .attr("width", `${width}px`)
             .attr("height", `${height}px`)
-        
+
         var context = canvas.node().getContext("2d");
 
         var bgImage = context.createImageData(width, height);
@@ -124,6 +137,10 @@ class Canvas extends Component {
             image.data[pixelOffset + 3] = alpha;
         }
 
+    };
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
     };
 
 }

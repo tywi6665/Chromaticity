@@ -1,3 +1,7 @@
 pre {
     text-align: center;
 }
+
+canvas {
+    cursor: pointer;
+}
