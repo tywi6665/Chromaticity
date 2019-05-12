@@ -5,6 +5,7 @@ import Nav from "../../components/Nav";
 import Container from "../../components/Container";
 import Card from "../../components/Card";
 import SubmitBtn from "../../components/SubmitBtn";
+import set from "lodash/set";
 import "./Saved.css";
 
 const swatchStyles = {
@@ -19,38 +20,31 @@ class Saved extends Component {
         photos: [
             {
                 src: "./images/DSC_0115.jpg",
-                id: 1,
-                display: true
+                display: false
             },
             {
                 src: "./images/DSC_0313.jpg",
-                id: 2,
                 display: true
             },
             {
                 src: "./images/DSC_0200.jpg",
-                id: 3,
                 display: true
             }],
         file: null,
         colors: [],
-        src: null
+        src: "./images/DSC_0115.jpg"
     };
-
-    // componentDidMount() {
-    //     console.log(this.state);
-    // };
 
     colorSwatches = () => {
         const { colors } = this.state;
         console.log(colors);
-        return colors.map((color, id) => {
+        return colors.map((color, i) => {
             return (
                 <div
                     className="swatch"
-                    key={id}
-                    style={{backgroundColor: color}}
-                > 
+                    key={i}
+                    style={{ backgroundColor: color }}
+                >
                     <p
                         style={{
                             color: color
@@ -62,7 +56,7 @@ class Saved extends Component {
     };
 
     getColors = colors => {
-        this.setState(state => ({ 
+        this.setState(state => ({
             colors: [...state.colors, ...colors]
         }));
     }
@@ -90,65 +84,70 @@ class Saved extends Component {
             .catch(err => console.log(err));
     };
 
-    imageClick = event => {
-        console.log(event.target)
-        const src = event.target.getAttribute("src");
-        const id = event.target.getAttribute("id");
+    imageClick = e => {
+        const src = e.target.getAttribute("src");
+        const display = this.state.photos.map(photo => {
+            if(photo.src !== src) return {
+                ...photo,
+                display: true};
+            return {
+                ...photo,
+                display: false
+            };
+        });
         this.setState({
+            photos: display,
             colors: [],
             src: src
         });
-    //     // for (let i = 0; i < this.state.photos.length; i++) {
-    //     //     console.log(i);
-    //     //     if (id == this.state.photos[i].id) {
-    //     //         this.setState({
-    //     //             display : false
-    //     //         })
-    //     //     }
-    //     //     return
-    //     // }
     };
 
-    render () {
-        return (
-            <Fragment>
-                <Nav />
-                <Container>
-                    <form ref="uploadForm" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
-                        <h6>Upload Photos</h6>
-                        <Card 
-                            type="file"
-                            onChange={this.handleFileUpload}
-                            name="sampleFile"
-                        />
-                        <SubmitBtn
-                            type="submit" 
-                            disabled={!(this.state.file)}
-                        />
-                    </form>
-                </Container>
-                <Container>
-                    <div className="wrapper">
-                        <ColorExtractor getColors={this.getColors}>
-                            <img src={this.state.src} alt="#" />
-                        </ColorExtractor>
-                        <div style={swatchStyles}>{this.colorSwatches()}</div>
-                    </div>
-                </Container>
-                {this.state.photos.map((photo, id) => (
-                    <Container>    
-                        <img onClick={this.imageClick} 
+
+render() {
+    return (
+        <Fragment>
+            <Nav />
+            <Container>
+                <form ref="uploadForm" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+                    <h6>Upload Photos</h6>
+                    <Card
+                        type="file"
+                        onChange={this.handleFileUpload}
+                        name="sampleFile"
+                    />
+                    <SubmitBtn
+                        type="submit"
+                        disabled={!(this.state.file)}
+                    />
+                </form>
+            </Container>
+            <Container>
+                <div className="wrapper">
+                    <ColorExtractor getColors={this.getColors}>
+                        <img src={this.state.src} alt="#" />
+                    </ColorExtractor>
+                    <div style={swatchStyles}>{this.colorSwatches()}</div>
+                </div>
+            </Container>
+            {this.state.photos.map((photo, i) => (
+                photo.display ? (
+                    <Container>
+                        <img onClick={this.imageClick}
                             src={photo.src}
-                            id={id} 
-                            key={id} 
-                            alt="#" 
+                            id={i}
+                            key={i}
+                            alt="#"
+                            display={photo.display}
                         />
-                    </Container>    
-                ))}
-                   
-            </Fragment>
-        );
-    }
+                    </Container>
+                ) : (
+                        ""
+                    )
+            ))}
+
+        </Fragment>
+    );
+}
 
 }
 

@@ -23,10 +23,6 @@ class Canvas extends Component {
 
     }
 
-    // componentWillMount() {
-    //     this.updateDimensions();
-    // }
-
     componentDidMount() {
         this.ColorWheel();
         window.addEventListener("resize", this.updateDimensions);
