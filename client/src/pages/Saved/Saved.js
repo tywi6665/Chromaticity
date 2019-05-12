@@ -9,9 +9,13 @@ import set from "lodash/set";
 import "./Saved.css";
 
 const swatchStyles = {
+    height: 115,
+    width: "100%",
     marginTop: 20,
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    perspective: 600,
+    overflow: "hidden"
 };
 
 class Saved extends Component {
@@ -40,16 +44,27 @@ class Saved extends Component {
         console.log(colors);
         return colors.map((color, i) => {
             return (
-                <div
-                    className="swatch"
-                    key={i}
-                    style={{ backgroundColor: color }}
+                <div className="swatch"
+                    data-toggle="toggle"
                 >
-                    <p
-                        style={{
-                            color: color
-                        }}
-                    >{color}</p>
+                    <div
+                        className="swatchFace frontFace"
+                        key={i}
+                        style={{ backgroundColor: color }}
+                        data-toggle="up"
+                    >
+                    </div>
+                    <div className="swatchFace backFace"
+                        data-toggle="up"
+                        style={{ borderColor: color  }}
+                    >
+                        <p
+                            style={{ color: color }}
+                            data-toggle="up"
+                        >
+                            {color}
+                        </p>
+                    </div>
                 </div>
             );
         });
@@ -87,9 +102,10 @@ class Saved extends Component {
     imageClick = e => {
         const src = e.target.getAttribute("src");
         const display = this.state.photos.map(photo => {
-            if(photo.src !== src) return {
+            if (photo.src !== src) return {
                 ...photo,
-                display: true};
+                display: true
+            };
             return {
                 ...photo,
                 display: false
@@ -102,52 +118,81 @@ class Saved extends Component {
         });
     };
 
+    toggleOn(e) {
+        const target = e.target;
+        compare(target);
+        function compare(e) {
+            if (e.getAttribute("data-toggle") === "down") {
+                lookingDown(e)
+            } else if (e.getAttribute("data-toggle") !== "toggle") {
+                lookingUp(e);
+            } else {
+                e.classList.toggle("toggle")
+            }
+        };
 
-render() {
-    return (
-        <Fragment>
-            <Nav />
-            <Container>
-                <form ref="uploadForm" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
-                    <h6>Upload Photos</h6>
-                    <Card
-                        type="file"
-                        onChange={this.handleFileUpload}
-                        name="sampleFile"
-                    />
-                    <SubmitBtn
-                        type="submit"
-                        disabled={!(this.state.file)}
-                    />
-                </form>
-            </Container>
-            <Container>
-                <div className="wrapper">
-                    <ColorExtractor getColors={this.getColors}>
-                        <img src={this.state.src} alt="#" />
-                    </ColorExtractor>
-                    <div style={swatchStyles}>{this.colorSwatches()}</div>
-                </div>
-            </Container>
-            {this.state.photos.map((photo, i) => (
-                photo.display ? (
-                    <Container>
-                        <img onClick={this.imageClick}
-                            src={photo.src}
-                            id={i}
-                            key={i}
-                            alt="#"
-                            display={photo.display}
+        function lookingUp(e) {
+            compare(e.parentElement)
+        }
+
+        function lookingDown(e) {
+            compare(e.children[0])
+        }
+    };
+
+
+    render() {
+        return (
+            <Fragment>
+                <Nav />
+                <Container>
+                    <form ref="uploadForm" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+                        <h6>Upload Photos</h6>
+                        <Card
+                            type="file"
+                            onChange={this.handleFileUpload}
+                            name="sampleFile"
                         />
-                    </Container>
-                ) : (
-                        ""
-                    )
-            ))}
+                        <SubmitBtn
+                            type="submit"
+                            disabled={!(this.state.file)}
+                        />
+                    </form>
+                </Container>
+                <Container>
+                    <div className="wrapper">
+                        <ColorExtractor getColors={this.getColors}>
+                            <img src={this.state.src} alt="#" />
+                        </ColorExtractor>
+                        <div 
+                            className="swatchContainer"
+                            // style={swatchStyles}
+                            onClick={this.toggleOn}
+                            data-toggle="down"
+                        >
+                            {this.colorSwatches()}
+                        </div>
+                    </div>
+                </Container>
+                {this.state.photos.map((photo, i) => (
+                    photo.display ? (
+                        <Container>
+                            <img onClick={this.imageClick}
+                                src={photo.src}
+                                id={i}
+                                key={i}
+                                alt="#"
+                                display={photo.display}
+                            />
+                        </Container>
+                    ) : (
+                            ""
+                        )
+                ))}
 
-        </Fragment>
-    );
-}
+            </Fragment>
+        );
+    }
 
 }
 

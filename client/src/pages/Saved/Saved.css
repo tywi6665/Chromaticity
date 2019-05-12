@@ -1,22 +1,66 @@
+.swatchContainer {
+    height: 115px;
+    width: 100%;
+    margin-top: 20;
+    display: flex;
+    justify-content: space-evenly;
+    perspective: 600px;
+    overflow: hidden;
+}
+
 .swatch {
+    height: 100%;
+    width: 100%;
+    flex-grow: 1;
+    margin: 10px 5px 0px 5px;
     position: relative;
-    margin-left: 2%;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+    cursor: pointer;
+}
+
+.swatchFace {
+    position: absolute;
+    /* margin-left: 2%; */
     width: 100%;
     height: 100px;
     border-radius: 10px;
+    backface-visibility: hidden;
 }
 
-.swatch:first-child {
+/* .swatch:first-child {
     margin-left: 0;
+} */
+
+.swatch.toggle {
+    transform: rotateY(180deg);
 }
+
+.backFace {
+    /* background: black; */
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    border-width: 2px;
+}
+
+/* .swatchContainer:first-child {
+    margin: 10px 5px 0px 0px;
+} */
+
+/* .swatchContainer:last-child {
+    margin: 10px 0px 0px 5px;
+} */
 
 p {
     position: absolute;
     text-align: center;
     font-weight: bold;
-    left: 50%;
+    /* left: 50%;
     bottom: -65%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
 }
 
 img {
