@@ -1,8 +1,9 @@
 .container {
-    width: 70%;
+    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     flex: 1 1 50%;
     margin: 2% auto 0;
     background-color: whitesmoke;
@@ -12,7 +13,7 @@
     padding: 4%;
 }
 
-@media only screen and (max-width: 940px) {
+@media only screen and (max-width: 500px) {
     .container {
         flex-direction: column;
     }

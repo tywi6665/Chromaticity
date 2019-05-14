@@ -1,18 +1,53 @@
+.wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.flexList {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.savedList {
+    height: 250px;
+    width: 300px;
+    flex-basis: auto;
+    flex-grow: 0.5;
+    flex-shrink: 1; 
+    border-radius: 10px;
+    margin: 10px;
+    transition: transform 0.5s;
+}
+
+.savedList:hover {
+    box-shadow: 5px 5px 15px black;
+    transform: scale(1.1);
+    z-index: 100;
+}
+
 .swatchContainer {
     height: 115px;
     width: 100%;
     margin-top: 20;
     display: flex;
     justify-content: space-evenly;
-    perspective: 600px;
-    overflow: hidden;
+    perspective: 1000px;
+    /* overflow: hidden; */
 }
 
 .swatch {
     height: 100%;
     width: 100%;
     flex-grow: 1;
+    flex-shrink: 1;
     margin: 10px 5px 0px 5px;
+    border-radius: 10px;
     position: relative;
     transform-style: preserve-3d;
     transition: transform 1s;
@@ -21,9 +56,12 @@
 
 .swatchFace {
     position: absolute;
-    /* margin-left: 2%; */
     width: 100%;
-    height: 100px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     border-radius: 10px;
     backface-visibility: hidden;
 }
@@ -37,11 +75,7 @@
 }
 
 .backFace {
-    /* background: black; */
     transform: rotateY(180deg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-style: solid;
     border-width: 2px;
 }
@@ -54,16 +88,47 @@
     margin: 10px 0px 0px 5px;
 } */
 
-p {
+.colorList {
+    list-style: none;
     position: absolute;
     text-align: center;
     font-weight: bold;
-    /* left: 50%;
-    bottom: -65%;
-    transform: translate(-50%, -50%); */
+    margin: 0;
+    padding: 0;
 }
 
-img {
+.colorList li {
+    padding-bottom: 5px;
+}
+
+.savedImg {
     height: 500px;
+    width: 100%;
     border-radius: 10px;
+}
+
+
+@media only screen and (max-width: 475px) {
+    .savedList {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    /* .swatchContainer {
+        height: 200px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .swatch {
+
+        flex-basis: 1/6;
+    } */
+}
+
+@media only screen and (max-width: 700px) {
+    .savedImg {
+        height: 300px;
+    }
 }

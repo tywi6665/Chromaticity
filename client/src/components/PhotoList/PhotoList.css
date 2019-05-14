@@ -3,7 +3,7 @@ h3 {
     width: 100%;
 }
 
-img {
+.image {
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -24,8 +24,8 @@ img {
     justify-content: center;
 }
 
-@media only screen and (max-width: 940px) {
+/* @media only screen and (max-width: 940px) {
     .images {
         width: 90%;
     }
-}
+} */

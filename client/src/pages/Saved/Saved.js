@@ -5,18 +5,17 @@ import Nav from "../../components/Nav";
 import Container from "../../components/Container";
 import Card from "../../components/Card";
 import SubmitBtn from "../../components/SubmitBtn";
-import set from "lodash/set";
 import "./Saved.css";
 
-const swatchStyles = {
-    height: 115,
-    width: "100%",
-    marginTop: 20,
-    display: "flex",
-    justifyContent: "center",
-    perspective: 600,
-    overflow: "hidden"
-};
+// const swatchStyles = {
+//     height: 115,
+//     width: "100%",
+//     marginTop: 20,
+//     display: "flex",
+//     justifyContent: "center",
+//     perspective: 600,
+//     overflow: "hidden"
+// };
 
 class Saved extends Component {
 
@@ -56,14 +55,16 @@ class Saved extends Component {
                     </div>
                     <div className="swatchFace backFace"
                         data-toggle="up"
-                        style={{ borderColor: color  }}
+                        style={{ borderColor: color }}
                     >
-                        <p
+                        <ul
+                            className="colorList"
                             style={{ color: color }}
                             data-toggle="up"
                         >
-                            {color}
-                        </p>
+                            <li data-toggle="up">{color}</li>
+                            <li data-toggle="up">{this.hexToRgb(color)}</li>
+                        </ul>
                     </div>
                 </div>
             );
@@ -140,13 +141,27 @@ class Saved extends Component {
         }
     };
 
+    hexToRgb(hex) {
+        const color = hex.replace('#', '');
+        const r = parseInt(color.substring(0, 2), 16);
+        const g = parseInt(color.substring(2, 4), 16);
+        const b = parseInt(color.substring(4, 6), 16);
+        const result = `rgb (${r}, ${g}, ${b})`;
+        return result;
+    }
+
 
     render() {
         return (
             <Fragment>
                 <Nav />
                 <Container>
-                    <form ref="uploadForm" encType="multipart/form-data" onSubmit={this.handleFormSubmit}>
+                    <form 
+                        className="savedForm"
+                        ref="uploadForm"
+                        encType="multipart/form-data" 
+                        onSubmit={this.handleFormSubmit}
+                        >
                         <h6>Upload Photos</h6>
                         <Card
                             type="file"
@@ -162,9 +177,13 @@ class Saved extends Component {
                 <Container>
                     <div className="wrapper">
                         <ColorExtractor getColors={this.getColors}>
-                            <img src={this.state.src} alt="#" />
+                            <img
+                                className="savedImg"
+                                src={this.state.src}
+                                alt="#"
+                            />
                         </ColorExtractor>
-                        <div 
+                        <div
                             className="swatchContainer"
                             // style={swatchStyles}
                             onClick={this.toggleOn}
@@ -174,22 +193,25 @@ class Saved extends Component {
                         </div>
                     </div>
                 </Container>
-                {this.state.photos.map((photo, i) => (
-                    photo.display ? (
-                        <Container>
-                            <img onClick={this.imageClick}
+                <Container>
+                    <div className="flexList">
+                    {this.state.photos.map((photo, i) => (
+                        photo.display ? (
+                            <img
+                                className="savedList"
+                                onClick={this.imageClick}
                                 src={photo.src}
                                 id={i}
                                 key={i}
                                 alt="#"
-                                display={photo.display}
+                                display={photo.display.toString()}
                             />
-                        </Container>
-                    ) : (
-                            ""
-                        )
-                ))}
-
+                        ) : (
+                                null
+                            )
+                    ))}
+                    </div>
+                </Container>
             </Fragment>
         );
     }

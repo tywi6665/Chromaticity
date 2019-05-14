@@ -4,7 +4,7 @@ import Nav from "../../components/Nav";
 import Container from "../../components/Container";
 import Canvas from "../../components/Canvas";
 import Card from "../../components/Card";
-import { PhotoList } from "../../components/PhotoList";
+import { PhotoList, Item } from "../../components/PhotoList";
 import SubmitBtn from "../../components/SubmitBtn";
 import "./Main.css";
 const convert = require('color-convert');
@@ -83,9 +83,12 @@ class Main extends Component {
                 <Container>
                     <PhotoList>
                         {this.state.photos.map(photo => (
-                            <div className="images" key={photo.id}>
-                                <img src={photo.assets.huge_thumb.url} alt={photo.description} />
-                            </div>
+                            <Item
+                                id={photo.id} 
+                                thumbnail={photo.assets.huge_thumb.url}
+                                description={photo.description}
+                            >
+                            </Item>
                         ))}
                     </PhotoList>
                 </Container>
