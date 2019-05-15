@@ -1,7 +1,32 @@
-/* .submit:disabled {
+.submit {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    box-sizing: border-box;
+    transition: all .4s ease-in-out;
+}
 
-    border-color: darkred;
-    border-radius: 10px;
-    background-color: red;
-    color: black;
-} */
+.submit:enabled {
+    background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+    transition: all .4s ease-in-out;
+}
+
+.submit:hover {
+    background-position: 100% 0;
+}
+
+.submit:disabled {
+    color: #fff;
+}
+
+.submit:focus {
+    outline: none;
+}

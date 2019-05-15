@@ -6,8 +6,8 @@ const Card = (props) => (
     <pre>
         <code className="card">
            
-                <div className="input">
-                    <input className="u-full-width" {...props}/>
+                <div>
+                    <input className="u-full-width input" {...props}/>
                 </div>
             
         </code>

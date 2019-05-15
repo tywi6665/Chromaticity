@@ -5,7 +5,7 @@ const fileUpload = require("express-fileupload");
 const s3 = require("s3");
 const fs = require("fs");
 const app = express();
-const keys = require("../../keys");
+const keys = require("../keys");
 require("dotenv").config();
 
 // routes

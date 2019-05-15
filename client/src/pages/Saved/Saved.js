@@ -7,16 +7,6 @@ import Card from "../../components/Card";
 import SubmitBtn from "../../components/SubmitBtn";
 import "./Saved.css";
 
-// const swatchStyles = {
-//     height: 115,
-//     width: "100%",
-//     marginTop: 20,
-//     display: "flex",
-//     justifyContent: "center",
-//     perspective: 600,
-//     overflow: "hidden"
-// };
-
 class Saved extends Component {
 
     state = {
@@ -40,11 +30,11 @@ class Saved extends Component {
 
     colorSwatches = () => {
         const { colors } = this.state;
-        console.log(colors);
         return colors.map((color, i) => {
             return (
                 <div className="swatch"
                     data-toggle="toggle"
+                    key={i}
                 >
                     <div
                         className="swatchFace frontFace"
@@ -81,7 +71,7 @@ class Saved extends Component {
         console.log(event.target.files)
         this.setState({
             file: event.target.files,
-            src: event.target.files[0].name
+            // src: event.target.files[0].name
         });
     }
 
@@ -98,6 +88,7 @@ class Saved extends Component {
         API.uploadPhoto(formData)
             .then(res => console.log(res))
             .catch(err => console.log(err));
+        document.querySelector(".savedForm").reset()
     };
 
     imageClick = e => {
@@ -150,7 +141,6 @@ class Saved extends Component {
         return result;
     }
 
-
     render() {
         return (
             <Fragment>
@@ -170,7 +160,7 @@ class Saved extends Component {
                         />
                         <SubmitBtn
                             type="submit"
-                            disabled={!(this.state.file)}
+                            disabled={!this.state.file}
                         />
                     </form>
                 </Container>
