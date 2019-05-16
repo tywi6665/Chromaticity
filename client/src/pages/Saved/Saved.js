@@ -146,18 +146,22 @@ class Saved extends Component {
             <Fragment>
                 <Nav />
                 <Container>
-                    <form 
+                    <form
                         className="savedForm"
                         ref="uploadForm"
-                        encType="multipart/form-data" 
+                        encType="multipart/form-data"
                         onSubmit={this.handleFormSubmit}
-                        >
+                    >
                         <h6>Upload Photos</h6>
-                        <Card
-                            type="file"
-                            onChange={this.handleFileUpload}
-                            name="sampleFile"
-                        />
+                        <div className="uploadWrapper">
+                            <button className="uploadButton">Upload a file</button>
+                            <input
+                                type="file"
+                                onChange={this.handleFileUpload}
+                                name="sampleFile"
+                            />
+                            <label htmlFor="sampleFile"></label>
+                        </div>
                         <SubmitBtn
                             type="submit"
                             disabled={!this.state.file}
@@ -185,21 +189,21 @@ class Saved extends Component {
                 </Container>
                 <Container>
                     <div className="flexList">
-                    {this.state.photos.map((photo, i) => (
-                        photo.display ? (
-                            <img
-                                className="savedList"
-                                onClick={this.imageClick}
-                                src={photo.src}
-                                id={i}
-                                key={i}
-                                alt="#"
-                                display={photo.display.toString()}
-                            />
-                        ) : (
-                                null
-                            )
-                    ))}
+                        {this.state.photos.map((photo, i) => (
+                            photo.display ? (
+                                <img
+                                    className="savedList"
+                                    onClick={this.imageClick}
+                                    src={photo.src}
+                                    id={i}
+                                    key={i}
+                                    alt="#"
+                                    display={photo.display.toString()}
+                                />
+                            ) : (
+                                    null
+                                )
+                        ))}
                     </div>
                 </Container>
             </Fragment>
