@@ -33,9 +33,9 @@
     transition: all .4s ease-in-out;
 }
 
-.uploadWrapper:hover > .uploadButton{
+/* .uploadWrapper:hover > .uploadButton{
     background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
-}
+} */
   
 .uploadWrapper input[type=file] {
     font-size: 100px;
