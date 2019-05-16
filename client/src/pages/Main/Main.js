@@ -24,7 +24,7 @@ class Main extends Component {
     };
 
     loadPhotos = color => {
-        fetch("api/shutterstock/" + color)
+        fetch("api/imagecolor/" + color)
             .then(res => res.json())
             .then(res => this.setState({ photos: res.data }))
             .catch(err => console.log(err));
