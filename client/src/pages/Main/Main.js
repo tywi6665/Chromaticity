@@ -84,7 +84,8 @@ class Main extends Component {
                     <PhotoList>
                         {this.state.photos.map(photo => (
                             <Item
-                                id={photo.id} 
+                                id={photo.id}
+                                key={photo.id} 
                                 thumbnail={photo.assets.huge_thumb.url}
                                 description={photo.description}
                             >

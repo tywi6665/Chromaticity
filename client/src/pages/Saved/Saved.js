@@ -9,24 +9,34 @@ import "./Saved.css";
 
 class Saved extends Component {
 
-    state = {
-        photos: [
-            {
-                src: "./images/DSC_0115.jpg",
-                display: false
-            },
-            {
-                src: "./images/DSC_0313.jpg",
-                display: true
-            },
-            {
-                src: "./images/DSC_0200.jpg",
-                display: true
-            }],
-        file: null,
-        colors: [],
-        src: "./images/DSC_0115.jpg"
-    };
+    constructor() {
+        super();
+
+        this.setupReader();
+
+        this.state = {
+            photos: [
+                {
+                    src: "./images/DSC_0115.jpg",
+                    display: false
+                },
+                {
+                    src: "./images/DSC_0313.jpg",
+                    display: true
+                },
+                {
+                    src: "./images/DSC_0200.jpg",
+                    display: true
+                }],
+            selectedFile: null,
+            imageBase64: "",
+            initialImageBase64: "",
+            colors: [],
+            src: "./images/DSC_0115.jpg"
+        };
+
+        this.handleFileUpload = this.handleFileUpload.bind(this);
+    }
 
     colorSwatches = () => {
         const { colors } = this.state;
@@ -67,28 +77,62 @@ class Saved extends Component {
         }));
     }
 
-    handleFileUpload = event => {
-        console.log(event.target.files)
-        this.setState({
-            file: event.target.files,
-            // src: event.target.files[0].name
+    handleFileUpload = e => {
+        console.log(e.target.files[0]);
+        const selectedFile = e.target.files[0];
+
+        if (selectedFile) {
+            this.setState({
+                selectedFile,
+                initialImageBase64: ""
+            });
+
+            this.reader.readAsDataURL(selectedFile);
+        };
+        // this.setState({
+        //     file: e.target.files,
+        //     src: event.target.files[0].name
+        // });
+    }
+
+    setupReader() {
+        this.reader = new FileReader();
+
+        this.reader.addEventListener('load', (event) => {
+            const { initialImageBase64 } = this.state;
+
+            const imageBase64 = event.target.result;
+
+            if (initialImageBase64) {
+                this.setState({ imageBase64 });
+            } else {
+                this.setState({ imageBase64, initialImageBase64: imageBase64 });
+            }
         });
     }
 
-    handleFormSubmit = event => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.file = (this.state.file[0]);
-        console.log(formData)
+    handleFormSubmit = e => {
+        e.preventDefault();
+        const { selectedFile } = this.state;
+
+        if (selectedFile) {
+            API.uploadImage(selectedFile)
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+        };
+        // const file = this.state.file[0]
+        // const formData = new FormData();
+        // formData.file = (this.state.file[0]);
+        // console.log(file);
         // fetch("api/upload", formData, {
         //     method: "post"
         // })
         // .then(res => console.log(res))
         // .catch(err => console.log(err));   
-        API.uploadImage(formData)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-        document.querySelector(".savedForm").reset()
+        // API.uploadImage(formData)
+        //     .then(res => console.log(res))
+        //     .catch(err => console.log(err));
+        // document.querySelector(".savedForm").reset()
     };
 
     imageClick = e => {
@@ -157,6 +201,7 @@ class Saved extends Component {
                             <button className="uploadButton">Upload a file</button>
                             <input
                                 type="file"
+                                accept='.jpg, .png, .jpeg'
                                 onChange={this.handleFileUpload}
                                 name="sampleFile"
                             />
@@ -164,7 +209,7 @@ class Saved extends Component {
                         </div>
                         <SubmitBtn
                             type="submit"
-                            disabled={!this.state.file}
+                            disabled={!this.state.selectedFile}
                         />
                     </form>
                 </Container>
