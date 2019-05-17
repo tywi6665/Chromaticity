@@ -7,13 +7,15 @@ const app = express();
 // Add routes, both API and view
 // app.use(routes);
 const colorRoutes = require("./routes/imageColor"),
-      imageUploadRoutes = require("./routes/image-upload");
+      imageUploadRoutes = require("./routes/image-upload"),
+      imageDownloadRoutes = require("./routes/image-download");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/api/imagecolor",colorRoutes);
-app.use("/api", imageUploadRoutes);
+app.use("/api/imagecolor", colorRoutes);
+app.use("/api/download", imageDownloadRoutes)
+app.use("/api/upload", imageUploadRoutes);
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {

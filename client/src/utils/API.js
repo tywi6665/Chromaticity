@@ -8,34 +8,18 @@ export default {
         // console.log(color)
         return axios.get("/api/imagecolor/" + color);
     },
-    //Queries aws
+    //Queries aws to upload
     uploadImage: function(image) {
       const formData = new FormData();
       formData.append("image", image);
-      return axios.post("/api/image-upload", formData)
+      return axios.post("/api/upload/image-upload", formData)
         .then(res => res.data.imageUrl)
         .catch(err => console.log(err));
-    } 
-    // function(formData) {
-        // console.log(formData.file);
-        // return axios.post("/api/upload", upload.single(formData.file), (req, res) => {
-        //     console.log(req.file);
-        //     if (!req.file) {
-        //       console.log("No file received");
-        //       return res.send({
-        //         success: false
-        //       });
-          
-        //     } else {
-        //       console.log('file received');
-        //       return res.send({
-        //         success: true
-        //       })
-        //     }
-            // headers: {
-            //     "Content-Type": "multipart/form-data"
-            // }
-        // }
-        // )
-    // }
+    }, 
+    //Queries aws to download
+    downloadImages: function() {
+      return axios.get("/api/download/image-download")
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
 };

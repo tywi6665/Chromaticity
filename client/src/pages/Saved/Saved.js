@@ -36,6 +36,10 @@ class Saved extends Component {
         };
 
         this.handleFileUpload = this.handleFileUpload.bind(this);
+    };
+
+    componentDidMount() {
+        this.downloadImages();
     }
 
     colorSwatches = () => {
@@ -75,7 +79,7 @@ class Saved extends Component {
         this.setState(state => ({
             colors: [...state.colors, ...colors]
         }));
-    }
+    };
 
     handleFileUpload = e => {
         console.log(e.target.files[0]);
@@ -93,7 +97,7 @@ class Saved extends Component {
         //     file: e.target.files,
         //     src: event.target.files[0].name
         // });
-    }
+    };
 
     setupReader() {
         this.reader = new FileReader();
@@ -109,7 +113,7 @@ class Saved extends Component {
                 this.setState({ imageBase64, initialImageBase64: imageBase64 });
             }
         });
-    }
+    };
 
     handleFormSubmit = e => {
         e.preventDefault();
@@ -120,19 +124,13 @@ class Saved extends Component {
                 .then(res => console.log(res))
                 .catch(err => console.log(err))
         };
-        // const file = this.state.file[0]
-        // const formData = new FormData();
-        // formData.file = (this.state.file[0]);
-        // console.log(file);
-        // fetch("api/upload", formData, {
-        //     method: "post"
-        // })
-        // .then(res => console.log(res))
-        // .catch(err => console.log(err));   
-        // API.uploadImage(formData)
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err));
-        // document.querySelector(".savedForm").reset()
+        document.querySelector(".savedForm").reset()
+    };
+
+    downloadImages() {
+        API.downloadImages()
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
     };
 
     imageClick = e => {
@@ -183,7 +181,7 @@ class Saved extends Component {
         const b = parseInt(color.substring(4, 6), 16);
         const result = `rgb (${r}, ${g}, ${b})`;
         return result;
-    }
+    };
 
     render() {
         return (
