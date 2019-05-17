@@ -85,7 +85,7 @@ class Saved extends Component {
         // })
         // .then(res => console.log(res))
         // .catch(err => console.log(err));   
-        API.uploadPhoto(formData)
+        API.uploadImage(formData)
             .then(res => console.log(res))
             .catch(err => console.log(err));
         document.querySelector(".savedForm").reset()
