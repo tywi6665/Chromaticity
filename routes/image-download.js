@@ -1,23 +1,32 @@
 const router = require("express").Router();
-// const upload = require("../services/image-upload");
+// const download = require("../services/image-download");
+const aws = require('aws-sdk');
+const keys = require("../keys");
 require("dotenv").config();
 
 //Image download route
 
-// const singleUpload = upload.single("image");
+router.get("/image-download", function (req, res) {
 
-router.get("/image-download", function(req, res) {
+    aws.config.update({
+        secretAccessKey: keys.s3.s3secretaccesskey,
+        accessKeyId: keys.s3.s3accesskey,
+        region: "us-east-2"
+    });
 
-    console.log(req.body);
-    // singleUpload(req, res, function(err) {
+    const s3 = new aws.S3();
 
-    //     if (err) {
-    //         return res.status(422).send({ errors: [{title: "File Upload Error",
-    //                                                 detail: err.message }]});
-    //     };
+    const params = {
+        Bucket: keys.s3.s3bucket,
+        EncodingType: "url"
+    };
 
-    //     return res.json({ "imageURL": req.file.location });
-    // });
+    s3.listObjectsV2(params, function (err, data) {
+        if (err) throw err;
+        // console.log(data.Contents)
+        return res.json(data.Contents);
+    });
+
 });
 
 module.exports = router;
