@@ -19,7 +19,13 @@ export default {
     //Queries aws to download
     downloadImages: function() {
       return axios.get("/api/download/image-download")
-        .then(res => res.data)
+        .then(function(res) {
+          let keys = [];
+          res.data.forEach(object => {
+            keys.push(object.Key)
+          })
+          return keys;
+        })
         .catch(err => console.log(err))
     }
 };

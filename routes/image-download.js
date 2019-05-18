@@ -23,7 +23,7 @@ router.get("/image-download", function (req, res) {
 
     s3.listObjectsV2(params, function (err, data) {
         if (err) throw err;
-        // console.log(data.Contents)
+        console.log(data.Contents)
         return res.json(data.Contents);
     });
 

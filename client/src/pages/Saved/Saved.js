@@ -27,12 +27,18 @@ class Saved extends Component {
                 {
                     src: "./images/DSC_0200.jpg",
                     display: true
+                },
+                {
+                    src: "./images/flower-3140492_1280.jpg",
+                    display: true
                 }],
             selectedFile: null,
             imageBase64: "",
             initialImageBase64: "",
             colors: [],
+            keys: null,
             src: "./images/DSC_0115.jpg"
+            // https://cors-anywhere.herokuapp.com/
         };
 
         this.handleFileUpload = this.handleFileUpload.bind(this);
@@ -93,10 +99,6 @@ class Saved extends Component {
 
             this.reader.readAsDataURL(selectedFile);
         };
-        // this.setState({
-        //     file: e.target.files,
-        //     src: event.target.files[0].name
-        // });
     };
 
     setupReader() {
@@ -129,7 +131,7 @@ class Saved extends Component {
 
     downloadImages() {
         API.downloadImages()
-            .then(res => console.log(res))
+            .then(res => this.setState({ keys: res }))
             .catch(err => console.log(err))
     };
 
