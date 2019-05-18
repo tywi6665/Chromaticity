@@ -15,30 +15,31 @@ class Saved extends Component {
         this.setupReader();
 
         this.state = {
-            photos: [
-                {
-                    src: "./images/DSC_0115.jpg",
-                    display: false
-                },
-                {
-                    src: "./images/DSC_0313.jpg",
-                    display: true
-                },
-                {
-                    src: "./images/DSC_0200.jpg",
-                    display: true
-                },
-                {
-                    src: "./images/flower-3140492_1280.jpg",
-                    display: true
-                }],
+            photos: null,
+            // [
+            //     {
+            //         src: "./images/DSC_0115.jpg",
+            //         display: false
+            //     },
+            //     {
+            //         src: "./images/DSC_0313.jpg",
+            //         display: true
+            //     },
+            //     {
+            //         src: "./images/DSC_0200.jpg",
+            //         display: true
+            //     },
+            //     {
+            //         src: "./images/flower-3140492_1280.jpg",
+            //         display: true
+            //     }
+            // ],
             selectedFile: null,
             imageBase64: "",
             initialImageBase64: "",
             colors: [],
             keys: null,
-            src: "./images/DSC_0115.jpg"
-            // https://cors-anywhere.herokuapp.com/
+            src: "1558212405749"
         };
 
         this.handleFileUpload = this.handleFileUpload.bind(this);
@@ -47,39 +48,6 @@ class Saved extends Component {
     componentDidMount() {
         this.downloadImages();
     }
-
-    colorSwatches = () => {
-        const { colors } = this.state;
-        return colors.map((color, i) => {
-            return (
-                <div className="swatch"
-                    data-toggle="toggle"
-                    key={i}
-                >
-                    <div
-                        className="swatchFace frontFace"
-                        key={i}
-                        style={{ backgroundColor: color }}
-                        data-toggle="up"
-                    >
-                    </div>
-                    <div className="swatchFace backFace"
-                        data-toggle="up"
-                        style={{ borderColor: color }}
-                    >
-                        <ul
-                            className="colorList"
-                            style={{ color: color }}
-                            data-toggle="up"
-                        >
-                            <li data-toggle="up">{color}</li>
-                            <li data-toggle="up">{this.hexToRgb(color)}</li>
-                        </ul>
-                    </div>
-                </div>
-            );
-        });
-    };
 
     getColors = colors => {
         this.setState(state => ({
@@ -131,12 +99,23 @@ class Saved extends Component {
 
     downloadImages() {
         API.downloadImages()
-            .then(res => this.setState({ keys: res }))
+            .then(res => {
+                let keys = [];
+                res.forEach(key => {
+                    return keys.push({
+                        src: key,
+                        display: true
+                    });
+                });
+                // console.log(keys)
+                return this.setState({ photos: keys })
+            })
             .catch(err => console.log(err))
     };
 
     imageClick = e => {
-        const src = e.target.getAttribute("src");
+        const src = e.target.getAttribute("src").split("").splice(54).join("");
+        // console.log(src)
         const display = this.state.photos.map(photo => {
             if (photo.src !== src) return {
                 ...photo,
@@ -185,6 +164,39 @@ class Saved extends Component {
         return result;
     };
 
+    colorSwatches = () => {
+        const { colors } = this.state;
+        return colors.map((color, i) => {
+            return (
+                <div className="swatch"
+                    data-toggle="toggle"
+                    key={i}
+                >
+                    <div
+                        className="swatchFace frontFace"
+                        key={i}
+                        style={{ backgroundColor: color }}
+                        data-toggle="up"
+                    >
+                    </div>
+                    <div className="swatchFace backFace"
+                        data-toggle="up"
+                        style={{ borderColor: color }}
+                    >
+                        <ul
+                            className="colorList"
+                            style={{ color: color }}
+                            data-toggle="up"
+                        >
+                            <li data-toggle="up">{color}</li>
+                            <li data-toggle="up">{this.hexToRgb(color)}</li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        });
+    };
+
     render() {
         return (
             <Fragment>
@@ -215,10 +227,15 @@ class Saved extends Component {
                 </Container>
                 <Container>
                     <div className="wrapper">
+                        <img
+                            className="savedImg"
+                            src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
+                            alt="#"
+                        />
                         <ColorExtractor getColors={this.getColors}>
                             <img
-                                className="savedImg"
-                                src={this.state.src}
+                                className="savedImgDisplayNone"
+                                src={`https://cors-anywhere.herokuapp.com/https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
                                 alt="#"
                             />
                         </ColorExtractor>
@@ -234,12 +251,13 @@ class Saved extends Component {
                 </Container>
                 <Container>
                     <div className="flexList">
-                        {this.state.photos.map((photo, i) => (
+                        {this.state.photos ? (
+                        this.state.photos.map((photo, i) => (
                             photo.display ? (
                                 <img
                                     className="savedList"
                                     onClick={this.imageClick}
-                                    src={photo.src}
+                                    src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${photo.src}`}
                                     id={i}
                                     key={i}
                                     alt="#"
@@ -248,7 +266,12 @@ class Saved extends Component {
                             ) : (
                                     null
                                 )
-                        ))}
+                        ))
+                        ) : (
+                            <p>Loading Images</p>
+                        )
+                        }
+                        
                     </div>
                 </Container>
             </Fragment>

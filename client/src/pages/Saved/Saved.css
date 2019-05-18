@@ -159,6 +159,10 @@
     border-radius: 10px;
 }
 
+.savedImgDisplayNone {
+    display: none;
+}
+
 
 @media only screen and (max-width: 475px) {
     .savedList {
