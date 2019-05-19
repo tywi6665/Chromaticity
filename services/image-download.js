@@ -17,7 +17,6 @@ const params = {
 const download = function () {
     s3.listObjectsV2(params, function (err, data) {
         if (err) throw err;
-        console.log(data.Contents)
         return data;
     });
 };

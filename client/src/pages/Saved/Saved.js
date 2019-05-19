@@ -3,7 +3,6 @@ import { ColorExtractor } from "react-color-extractor";
 import API from "../../utils/API";
 import Nav from "../../components/Nav";
 import Container from "../../components/Container";
-import Card from "../../components/Card";
 import SubmitBtn from "../../components/SubmitBtn";
 import "./Saved.css";
 
@@ -16,24 +15,6 @@ class Saved extends Component {
 
         this.state = {
             photos: null,
-            // [
-            //     {
-            //         src: "./images/DSC_0115.jpg",
-            //         display: false
-            //     },
-            //     {
-            //         src: "./images/DSC_0313.jpg",
-            //         display: true
-            //     },
-            //     {
-            //         src: "./images/DSC_0200.jpg",
-            //         display: true
-            //     },
-            //     {
-            //         src: "./images/flower-3140492_1280.jpg",
-            //         display: true
-            //     }
-            // ],
             selectedFile: null,
             imageBase64: "",
             initialImageBase64: "",
