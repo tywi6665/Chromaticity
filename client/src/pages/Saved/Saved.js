@@ -226,7 +226,11 @@ class Saved extends Component {
                             onClick={this.toggleOn}
                             data-toggle="down"
                         >
-                            {this.colorSwatches()}
+                            {this.state.colors.length ? (
+                                this.colorSwatches()
+                            ) : (
+                                <p className="extractingText">Extracting Colors</p>
+                            )}
                         </div>
                     </div>
                 </Container>
