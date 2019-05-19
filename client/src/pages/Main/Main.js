@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import API from "../../utils/API";
+import API from "../../utils/API";
 import Nav from "../../components/Nav";
 import Container from "../../components/Container";
 import Canvas from "../../components/Canvas";
@@ -24,9 +24,8 @@ class Main extends Component {
     };
 
     loadPhotos = color => {
-        fetch("api/imagecolor/" + color)
-            .then(res => res.json())
-            .then(res => this.setState({ photos: res.data }))
+        API.getPhotos(color)
+            .then(res => this.setState({ photos: res.data.data }))
             .catch(err => console.log(err));
     };
 
@@ -82,15 +81,18 @@ class Main extends Component {
                 </Container>
                 <Container>
                     <PhotoList>
-                        {this.state.photos.map(photo => (
+                        {this.state.photos.length ? (
+                        this.state.photos.map(photo => (
                             <Item
                                 id={photo.id}
-                                key={photo.id} 
+                                key={photo.id}
                                 thumbnail={photo.assets.huge_thumb.url}
                                 description={photo.description}
                             >
                             </Item>
-                        ))}
+                        ))) : (
+                            <p>Retrieving Photos</p>
+                        )}
                     </PhotoList>
                 </Container>
             </div>

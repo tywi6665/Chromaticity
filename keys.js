@@ -1,13 +1,11 @@
 require("dotenv").config();
 
-exports.shutterstock = {
+module.exports = {
     clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET
+    clientSecret: process.env.CLIENT_SECRET,
+    s3bucket: process.env.S3_BUCKET,
+	s3accesskey: process.env.S3_ACCESSKEY,
+	s3secretaccesskey: process.env.S3_SECRETACCESSKEY
 };
 
-exports.s3 = {
-    "s3bucket": "bootcamp-project-3",
-	"s3accesskey": "AKIAICMBSKGHYE2E6YEA",
-	"s3secretaccesskey": "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"
-}
 

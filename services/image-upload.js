@@ -4,8 +4,8 @@ const multerS3 = require('multer-s3');
 const keys = require("../keys");
 
 aws.config.update({
-    secretAccessKey: keys.s3.s3secretaccesskey,
-    accessKeyId: keys.s3.s3accesskey,
+    secretAccessKey: keys.s3secretaccesskey,
+    accessKeyId: keys.s3accesskey,
     region: "us-east-2"
 })
  
@@ -23,7 +23,7 @@ const upload = multer({
   fileFilter,
   storage: multerS3({
     s3,
-    bucket: keys.s3.s3bucket,
+    bucket: keys.s3bucket,
     acl: "public-read",
     metadata: function (req, file, cb) {
       cb(null, {fieldName: file.fieldname});
