@@ -22,7 +22,7 @@ class Saved extends Component {
             initialImageBase64: "",
             colors: [],
             keys: null,
-            src: "1558212405749",
+            src: "",
             previewVisible: false,
             previewImage: "",
             fileList: []
@@ -32,7 +32,7 @@ class Saved extends Component {
     };
 
     componentDidMount() {
-        this.downloadImages();
+        this.downloadImages()
     }
 
     getColors = colors => {
@@ -110,7 +110,10 @@ class Saved extends Component {
                         display: true
                     });
                 });
-                return this.setState({ photos: keys })
+                const src = keys[0].src;
+                keys[0].display = false
+                console.log(keys);
+                return this.setState({ photos: keys, src: src })
             })
             .catch(err => console.log(err))
     };
@@ -200,8 +203,6 @@ class Saved extends Component {
     };
 
     render() {
-        // const { previewVisible, previewImage, fileList } = this.state;
-
         return (
             <Fragment>
                 <Nav />
