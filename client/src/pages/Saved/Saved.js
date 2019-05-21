@@ -92,7 +92,7 @@ class Saved extends Component {
                 .catch(err => console.log(err))
         };
 
-        this.setState({ 
+        this.setState({
             previewImage: "",
             fileList: []
         })
@@ -139,8 +139,8 @@ class Saved extends Component {
         const target = e.target;
         compare(target);
         function compare(e) {
-            if (e.getAttribute("data-toggle") === "down") {
-                lookingDown(e)
+            if (e.getAttribute("data-toggle") === "none") {
+                return
             } else if (e.getAttribute("data-toggle") !== "toggle") {
                 lookingUp(e);
             } else {
@@ -152,9 +152,9 @@ class Saved extends Component {
             compare(e.parentElement)
         }
 
-        function lookingDown(e) {
-            compare(e.children[0])
-        }
+        // function lookingDown(e) {
+        //     compare(e.children[0])
+        // }
     };
 
     hexToRgb(hex) {
@@ -201,7 +201,7 @@ class Saved extends Component {
 
     render() {
         // const { previewVisible, previewImage, fileList } = this.state;
-        
+
         return (
             <Fragment>
                 <Nav />
@@ -214,26 +214,26 @@ class Saved extends Component {
                         onSubmit={this.handleFormSubmit}
                     >
                         <h6>Upload Photos</h6>
-                            <Upload
-                                className="Upload"
-                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                listType="picture-card"
-                                fileList={this.state.fileList}
-                                type="file"
-                                accept='.jpg, .png, .jpeg'
-                                onPreview={this.handlePreview}
-                                onChange={this.handleChange}
-                            >
-                                {this.state.fileList.length >= 1 ? null : (
-                                    <div>
-                                        <Icon type="plus" />
-                                        <div className="ant-upload-text">Upload</div>
-                                    </div>
-                                )}
-                            </Upload>
-                            <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
-                                <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-                            </Modal>
+                        <Upload
+                            className="Upload"
+                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            listType="picture-card"
+                            fileList={this.state.fileList}
+                            type="file"
+                            accept='.jpg, .png, .jpeg'
+                            onPreview={this.handlePreview}
+                            onChange={this.handleChange}
+                        >
+                            {this.state.fileList.length >= 1 ? null : (
+                                <div>
+                                    <Icon type="plus" />
+                                    <div className="ant-upload-text">Upload</div>
+                                </div>
+                            )}
+                        </Upload>
+                        <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                            <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                        </Modal>
                         {/* <div className="uploadWrapper">
                             <button className="uploadButton">Upload a file</button>
                             <input
@@ -252,11 +252,12 @@ class Saved extends Component {
                 </Container>
                 <Container>
                     <div className="wrapper">
-                        <img
-                            className="savedImg"
-                            src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
-                            alt="#"
-                        />
+                        <div className="savedImg">
+                            <img
+                                src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
+                                alt="#"
+                            />
+                        </div>
                         <ColorExtractor getColors={this.getColors}>
                             <img
                                 className="savedImgDisplayNone"
@@ -267,7 +268,7 @@ class Saved extends Component {
                         <div
                             className="swatchContainer"
                             onClick={this.toggleOn}
-                            data-toggle="down"
+                            data-toggle="none"
                         >
                             {this.state.colors.length ? (
                                 this.colorSwatches()
