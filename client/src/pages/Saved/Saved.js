@@ -1,4 +1,6 @@
 import React, { Fragment, Component } from "react";
+import { Upload, Icon, Modal } from 'antd';
+import 'antd/dist/antd.css';
 import { ColorExtractor } from "react-color-extractor";
 import API from "../../utils/API";
 import Nav from "../../components/Nav";
@@ -20,7 +22,10 @@ class Saved extends Component {
             initialImageBase64: "",
             colors: [],
             keys: null,
-            src: "1558212405749"
+            src: "1558212405749",
+            previewVisible: false,
+            previewImage: "",
+            fileList: []
         };
 
         this.handleFileUpload = this.handleFileUpload.bind(this);
@@ -66,6 +71,17 @@ class Saved extends Component {
         });
     };
 
+    handleChange = ({ fileList }) => this.setState({ fileList });
+
+    handlePreview = file => {
+        this.setState({
+            previewImage: file.url || file.thumbUrl,
+            previewVisible: true,
+        });
+    };
+
+    handleCancel = () => this.setState({ previewVisible: false });
+
     handleFormSubmit = e => {
         e.preventDefault();
         const { selectedFile } = this.state;
@@ -75,6 +91,12 @@ class Saved extends Component {
                 .then(res => console.log(res))
                 .catch(err => console.log(err))
         };
+
+        this.setState({ 
+            previewImage: "",
+            fileList: []
+        })
+
         document.querySelector(".savedForm").reset()
     };
 
@@ -88,7 +110,6 @@ class Saved extends Component {
                         display: true
                     });
                 });
-                // console.log(keys)
                 return this.setState({ photos: keys })
             })
             .catch(err => console.log(err))
@@ -179,6 +200,8 @@ class Saved extends Component {
     };
 
     render() {
+        // const { previewVisible, previewImage, fileList } = this.state;
+        
         return (
             <Fragment>
                 <Nav />
@@ -187,10 +210,31 @@ class Saved extends Component {
                         className="savedForm"
                         ref="uploadForm"
                         encType="multipart/form-data"
+                        onChange={this.handleFileUpload}
                         onSubmit={this.handleFormSubmit}
                     >
                         <h6>Upload Photos</h6>
-                        <div className="uploadWrapper">
+                            <Upload
+                                className="Upload"
+                                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                listType="picture-card"
+                                fileList={this.state.fileList}
+                                type="file"
+                                accept='.jpg, .png, .jpeg'
+                                onPreview={this.handlePreview}
+                                onChange={this.handleChange}
+                            >
+                                {this.state.fileList.length >= 1 ? null : (
+                                    <div>
+                                        <Icon type="plus" />
+                                        <div className="ant-upload-text">Upload</div>
+                                    </div>
+                                )}
+                            </Upload>
+                            <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
+                                <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
+                            </Modal>
+                        {/* <div className="uploadWrapper">
                             <button className="uploadButton">Upload a file</button>
                             <input
                                 type="file"
@@ -199,10 +243,10 @@ class Saved extends Component {
                                 name="sampleFile"
                             />
                             <label htmlFor="sampleFile"></label>
-                        </div>
+                        </div> */}
                         <SubmitBtn
                             type="submit"
-                            disabled={!this.state.selectedFile}
+                            disabled={!this.state.selectedFile && !this.state.previewImage}
                         />
                     </form>
                 </Container>
@@ -222,41 +266,40 @@ class Saved extends Component {
                         </ColorExtractor>
                         <div
                             className="swatchContainer"
-                            // style={swatchStyles}
                             onClick={this.toggleOn}
                             data-toggle="down"
                         >
                             {this.state.colors.length ? (
                                 this.colorSwatches()
                             ) : (
-                                <p className="extractingText">Extracting Colors</p>
-                            )}
+                                    <p className="extractingText">Extracting Colors</p>
+                                )}
                         </div>
                     </div>
                 </Container>
                 <Container>
                     <div className="flexList">
                         {this.state.photos ? (
-                        this.state.photos.map((photo, i) => (
-                            photo.display ? (
-                                <img
-                                    className="savedList"
-                                    onClick={this.imageClick}
-                                    src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${photo.src}`}
-                                    id={i}
-                                    key={i}
-                                    alt="#"
-                                    display={photo.display.toString()}
-                                />
-                            ) : (
-                                    null
-                                )
-                        ))
+                            this.state.photos.map((photo, i) => (
+                                photo.display ? (
+                                    <img
+                                        className="savedList"
+                                        onClick={this.imageClick}
+                                        src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${photo.src}`}
+                                        id={i}
+                                        key={i}
+                                        alt="#"
+                                        display={photo.display.toString()}
+                                    />
+                                ) : (
+                                        null
+                                    )
+                            ))
                         ) : (
-                            <p>Loading Images</p>
-                        )
+                                <p>Loading Images</p>
+                            )
                         }
-                        
+
                     </div>
                 </Container>
             </Fragment>

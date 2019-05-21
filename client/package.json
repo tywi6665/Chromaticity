@@ -8,6 +8,7 @@
   },
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "antd": "^3.18.2",
     "axios": "^0.16.2",
     "color-convert": "^1.9.3",
     "d3": "^5.7.0",
