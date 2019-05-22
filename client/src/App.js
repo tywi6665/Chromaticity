@@ -9,7 +9,7 @@ const App = () => (
   <Router>
     <div>
       <Switch>
-        <Route exact path="/" component={Intro} />
+        <Route exact path="/" component={Main} />
         <Route exact path="/main" component={Main} />
         <Route exact path="/saved" component={Saved} />
       </Switch>
@@ -17,4 +17,4 @@ const App = () => (
   </Router>
 )
 
-export default App;
+export default Intro(App);

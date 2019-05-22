@@ -124,6 +124,7 @@
 
 .savedImg img {
     width: 80%;
+    /* max-height: 450px;  */
     height: auto;
     border-radius: 10px;
     box-shadow: 2px 2px 5px grey;

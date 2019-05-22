@@ -3,257 +3,270 @@ import { Link } from "react-router-dom";
 import * as d3 from "d3";
 import "./Intro.css";
 
-class Intro extends Component {
+// class Intro extends Component {
 
-    render() {
-        return (
-            <div className="div" id="div">
-                <button className="button">
-                    <Link onClick={() => this.animation.stop()} className="link" to={"/main"}>Click Me</Link>
-                </button>
-                <pre>
-                    <canvas id="canvas"/>
-                </pre>
-            </div>
-        )
-    }
+function Canvas() {
+    return (
+            <pre>
+                <canvas id="canvas" />
+            </pre>
+    );
+};
 
-    componentDidMount() {
-        this.animation();
-    };
+function Intro(WrappedComponent) {
+    return class extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                loading: true
+            };
+        };
 
-    animation() {
+        componentDidMount() {
+            this.animation();
+            setTimeout(() => {
+                this.setState({
+                    loading: false
+                });
+            }, 10000)
+        };
 
-        //Creating the canvas
-        const width = 600;
-        const height = 600;
-        
-        const canvas = d3.select("div").append("canvas")
-            .attr("id", "canvas")
-            .attr("width", `${width}px`)
-            .attr("height", `${height}px`)
+        animation() {
 
-        canvas.node().getContext("2d");
+            //Creating the canvas
+            const width = 600;
+            const height = 600;
 
-        //Point settings
-        const numPoints = 7000;
-        const pointWidth = 4;
-        const pointMargin = 3;
+            const canvas = d3.select("div").append("canvas")
+                .attr("id", "canvas")
+                .attr("width", `${width}px`)
+                .attr("height", `${height}px`)
 
-        //Create set of points
-        const points = createPoints(numPoints, pointWidth, width, height);
+            canvas.node().getContext("2d");
 
-        //Layout functions that only take in a point argument
-        const toGrid = (points) => gridLayout(points, pointWidth + pointMargin, width);
-        const toSine = (points) => sineLayout(points, pointWidth + pointMargin, width, height);
-        const toCosine = (points) => cosineLayout(points, pointWidth + pointMargin, width, height);
-        const toTangent = (points) => tangentLayout(points, pointWidth + pointMargin, width, height);
-        const toSpiral = (points) => spiralLayout(points, pointWidth + pointMargin, width, height);
-        const toPhyllotaxis = (points) => phyllotaxisLayout(points, pointWidth + pointMargin, width /2, height /2);
+            //Point settings
+            const numPoints = 7000;
+            const pointWidth = 4;
+            const pointMargin = 3;
 
-        //Create an array to cycle through layouts
-        const layouts = [toSine, toCosine, toPhyllotaxis, toSpiral, toPhyllotaxis, toGrid, toTangent];
+            //Create set of points
+            const points = createPoints(numPoints, pointWidth, width, height);
 
-        //Function to draw out each layout
-        function draw() {
-            const ctx = canvas.node().getContext("2d");
-            ctx.save()
+            //Layout functions that only take in a point argument
+            const toGrid = (points) => gridLayout(points, pointWidth + pointMargin, width);
+            const toSine = (points) => sineLayout(points, pointWidth + pointMargin, width, height);
+            const toCosine = (points) => cosineLayout(points, pointWidth + pointMargin, width, height);
+            const toTangent = (points) => tangentLayout(points, pointWidth + pointMargin, width, height);
+            const toSpiral = (points) => spiralLayout(points, pointWidth + pointMargin, width, height);
+            const toPhyllotaxis = (points) => phyllotaxisLayout(points, pointWidth + pointMargin, width / 2, height / 2);
 
-            //Erases the canvas
-            ctx.clearRect(0, 0, width, height);
+            //Create an array to cycle through layouts
+            const layouts = [toSine, toCosine, toPhyllotaxis, toSpiral, toPhyllotaxis, toGrid, toTangent];
 
-            //Renders each point as a rectangle
-            for (let i = 0; i < points.length; i++) {
-                const point = points[i];
-                ctx.fillStyle = point.color;
-                ctx.fillRect(point.x, point.y, pointWidth, pointWidth);
-            }
+            //Function to draw out each layout
+            function draw() {
+                const ctx = canvas.node().getContext("2d");
+                ctx.save()
 
-            ctx.restore();
-        }
+                //Erases the canvas
+                ctx.clearRect(0, 0, width, height);
 
-        //Animation setup
-        const duration = 1500;
-        const ease = d3.easeCubic;
-        let timer;
-        let currLayout = 0;
+                //Renders each point as a rectangle
+                for (let i = 0; i < points.length; i++) {
+                    const point = points[i];
+                    ctx.fillStyle = point.color;
+                    ctx.fillRect(point.x, point.y, pointWidth, pointWidth);
+                }
 
-        //Function to animate each layout
-        function animate(layout) {
-            //Stores source position
-            points.forEach(point => {
-                point.sx = point.x;
-                point.sy = point.y;
-            });
+                ctx.restore();
+            };
 
-            //Get x and y position for each point
-            layout(points);
+            //Animation setup
+            const duration = 1500;
+            const ease = d3.easeCubic;
+            let timer;
+            let currLayout = 0;
 
-            //Store destination position
-            points.forEach(point => {
-                point.tx = point.x;
-                point.ty = point.y;
-            });
-
-            timer = d3.timer((elasped) => {
-                //Compute elasped time for animation
-                const t = Math.min(1, ease(elasped / duration));
-
-                //Updates point positions
+            //Function to animate each layout
+            function animate(layout) {
+                //Stores source position
                 points.forEach(point => {
-                    point.x = point.sx * (1 - t) + point.tx * t;
-                    point.y = point.sy * (1 - t) + point.ty * t;
+                    point.sx = point.x;
+                    point.sy = point.y;
                 });
 
-                //Update animation on screen
-                draw();
+                //Get x and y position for each point
+                layout(points);
 
-                //If animation has concluded
-                if (t === 1) {
-                    //Stop timer
-                    timer.stop();
+                //Store destination position
+                points.forEach(point => {
+                    point.tx = point.x;
+                    point.ty = point.y;
+                });
 
-                    //Update to use next layout
-                    currLayout = (currLayout + 1) % layouts.length;
+                timer = d3.timer((elasped) => {
+                    //Compute elasped time for animation
+                    const t = Math.min(1, ease(elasped / duration));
 
-                    //Restart animation with new layout
-                    animate(layouts[currLayout]);
-                }
-            });
-        }
+                    //Updates point positions
+                    points.forEach(point => {
+                        point.x = point.sx * (1 - t) + point.tx * t;
+                        point.y = point.sy * (1 - t) + point.ty * t;
+                    });
 
-        //Function to genreate the points
-        function createPoints(numPoints, pointWidth, width, height) {
-            const colorScale = d3.scaleSequential(d3.interpolateRainbow)
-                .domain([numPoints - 1, 0]);
+                    //Update animation on screen
+                    draw();
 
-            const points = d3.range(numPoints).map(id => ({
-                id,
-                color: colorScale(id)
-            }));
+                    //If animation has concluded
+                    if (t === 1) {
+                        //Stop timer
+                        timer.stop();
 
-            return randomLayout(points, pointWidth, width, height);
-        }
+                        //Update to use next layout
+                        currLayout = (currLayout + 1) % layouts.length;
 
-        //Function to handle layout transitions
-        function randomLayout(points, pointWidth, width, height) {
-            points.forEach(point => {
-                point.x = Math.random() * (width - pointWidth);
-                point.y = Math.random() * (height - pointWidth);
-            });
+                        //Restart animation with new layout
+                        animate(layouts[currLayout]);
+                    };
+                });
+            };
 
-            return points;
-        }
+            //Function to genreate the points
+            function createPoints(numPoints, pointWidth, width, height) {
+                const colorScale = d3.scaleSequential(d3.interpolateRainbow)
+                    .domain([numPoints - 1, 0]);
 
-        //Function for grid layout
-        function gridLayout(points, pointWidth, gridWidth) {
-            const pointHeight = pointWidth;
-            const pointsPerRow = Math.floor(gridWidth / pointWidth);
+                const points = d3.range(numPoints).map(id => ({
+                    id,
+                    color: colorScale(id)
+                }));
 
-            points.forEach((point, i) => {
-                point.x = pointWidth * (i % pointsPerRow);
-                point.y = pointHeight * Math.floor(i / pointsPerRow);
-            });
+                return randomLayout(points, pointWidth, width, height);
+            };
 
-            return points;
-        }
+            //Function to handle layout transitions
+            function randomLayout(points, pointWidth, width, height) {
+                points.forEach(point => {
+                    point.x = Math.random() * (width - pointWidth);
+                    point.y = Math.random() * (height - pointWidth);
+                });
 
-        //Function for sine layout
-        function sineLayout(points, pointWidth, width, height) {
-            const amplitude = 0.3 * (height / 2);
-            const yOffset = height / 2;
-            const periods = 3;
-            const yScale = d3.scaleLinear()
-                .domain([0, points.length -1])
-                .range([0, periods * 2 * Math.PI]);
+                return points;
+            };
 
-            points.forEach((point, i) => {
-                point.x = (i / points.length) * (width - pointWidth);
-                point.y = amplitude * Math.sin(yScale(i)) + yOffset;
-            })
+            //Function for grid layout
+            function gridLayout(points, pointWidth, gridWidth) {
+                const pointHeight = pointWidth;
+                const pointsPerRow = Math.floor(gridWidth / pointWidth);
 
-            return points;
-        }
+                points.forEach((point, i) => {
+                    point.x = pointWidth * (i % pointsPerRow);
+                    point.y = pointHeight * Math.floor(i / pointsPerRow);
+                });
 
-        //Function for cosine layout
-        function cosineLayout(points, pointWidth, width, height) {
-            const amplitude = 0.5 * (height / 2);
-            const yOffset = height / 2;
-            const periods = 10;
-            const yScale = d3.scaleLinear()
-                .domain([0, points.length -1])
-                .range([0, periods * 2 * Math.PI / 2]);
+                return points;
+            };
 
-            points.forEach((point, i) => {
-                point.x = (i / points.length) * (width - pointWidth);
-                point.y = amplitude * Math.cos(yScale(i)) + yOffset;
-            })
+            //Function for sine layout
+            function sineLayout(points, pointWidth, width, height) {
+                const amplitude = 0.3 * (height / 2);
+                const yOffset = height / 2;
+                const periods = 3;
+                const yScale = d3.scaleLinear()
+                    .domain([0, points.length - 1])
+                    .range([0, periods * 2 * Math.PI]);
 
-            return points;
-        }
+                points.forEach((point, i) => {
+                    point.x = (i / points.length) * (width - pointWidth);
+                    point.y = amplitude * Math.sin(yScale(i)) + yOffset;
+                })
 
-        //Function for tangent layout
-        function tangentLayout(points, pointWidth, width, height) {
-            const amplitude = 0.5 * (height / 2);
-            const yOffset = height / 2;
-            const periods = 10;
-            const yScale = d3.scaleLinear()
-                .domain([0, points.length -1])
-                .range([0, periods * 5 * Math.PI]);
+                return points;
+            };
 
-            points.forEach((point, i) => {
-                point.x = (i / points.length) * (width - pointWidth);
-                point.y = amplitude * Math.tan(yScale(i)) + yOffset;
-            })
+            //Function for cosine layout
+            function cosineLayout(points, pointWidth, width, height) {
+                const amplitude = 0.5 * (height / 2);
+                const yOffset = height / 2;
+                const periods = 10;
+                const yScale = d3.scaleLinear()
+                    .domain([0, points.length - 1])
+                    .range([0, periods * 2 * Math.PI / 2]);
 
-            return points;
-        }
+                points.forEach((point, i) => {
+                    point.x = (i / points.length) * (width - pointWidth);
+                    point.y = amplitude * Math.cos(yScale(i)) + yOffset;
+                })
 
-        //Function for spiral layout
-        function spiralLayout(points, pointWidth, width, height) {
-            const xOffset = width / 2;
-            const yOffset = height / 2;
-            const periods = 20;
-            const rScale = d3.scaleLinear()
-                .domain([0, points.length -1])
-                .range([0, Math.min(width / 2, height / 2) - pointWidth]);
+                return points;
+            };
 
-            const thetaScale = d3.scaleLinear()
-                .domain([0, points.length -1])
-                .range([0, periods * 2 * Math.PI]);
+            //Function for tangent layout
+            function tangentLayout(points, pointWidth, width, height) {
+                const amplitude = 0.5 * (height / 2);
+                const yOffset = height / 2;
+                const periods = 10;
+                const yScale = d3.scaleLinear()
+                    .domain([0, points.length - 1])
+                    .range([0, periods * 5 * Math.PI]);
 
-            points.forEach((point, i) => {
-                point.x = rScale(i) * Math.cos(thetaScale(i)) + xOffset;
-                point.y = rScale(i) * Math.sin(thetaScale(i)) + yOffset;
-            });
+                points.forEach((point, i) => {
+                    point.x = (i / points.length) * (width - pointWidth);
+                    point.y = amplitude * Math.tan(yScale(i)) + yOffset;
+                })
 
-            return points;
-        }
+                return points;
+            };
 
-        //Function for phyllotaxis layout
-        function phyllotaxisLayout(points, pointWidth, xOffset = 0, yOffset = 0, iOffset = 0) {
-            const theta = Math.PI * (3 - Math.sqrt(5));
-            const pointRadius = pointWidth / 2;
+            //Function for spiral layout
+            function spiralLayout(points, pointWidth, width, height) {
+                const xOffset = width / 2;
+                const yOffset = height / 2;
+                const periods = 20;
+                const rScale = d3.scaleLinear()
+                    .domain([0, points.length - 1])
+                    .range([0, Math.min(width / 2, height / 2) - pointWidth]);
 
-            points.forEach((point, i) => {
-                const index = (i + iOffset) % points.length;
-                const phylloX = pointRadius * Math.sqrt(index) * Math.cos(index * theta);
-                const phylloY = pointRadius * Math.sqrt(index) * Math.sin(index * theta);
+                const thetaScale = d3.scaleLinear()
+                    .domain([0, points.length - 1])
+                    .range([0, periods * 2 * Math.PI]);
 
-                point.x = xOffset + phylloX - pointRadius;
-                point.y = yOffset + phylloY - pointRadius;
-            });
+                points.forEach((point, i) => {
+                    point.x = rScale(i) * Math.cos(thetaScale(i)) + xOffset;
+                    point.y = rScale(i) * Math.sin(thetaScale(i)) + yOffset;
+                });
 
-            return points;
-        }
+                return points;
+            };
 
-        toGrid(points)
-        draw();
-        animate(layouts[currLayout]);
-    }
+            //Function for phyllotaxis layout
+            function phyllotaxisLayout(points, pointWidth, xOffset = 0, yOffset = 0, iOffset = 0) {
+                const theta = Math.PI * (3 - Math.sqrt(5));
+                const pointRadius = pointWidth / 2;
 
+                points.forEach((point, i) => {
+                    const index = (i + iOffset) % points.length;
+                    const phylloX = pointRadius * Math.sqrt(index) * Math.cos(index * theta);
+                    const phylloY = pointRadius * Math.sqrt(index) * Math.sin(index * theta);
 
-}
+                    point.x = xOffset + phylloX - pointRadius;
+                    point.y = yOffset + phylloY - pointRadius;
+                });
+
+                return points;
+            };
+
+            toGrid(points);
+            draw();
+            animate(layouts[currLayout]);
+        };
+
+        render() {
+            if (this.state.loading) return Canvas();
+            return <WrappedComponent {...this.props} />
+        };
+    };
+};
 
 
 export default Intro;
