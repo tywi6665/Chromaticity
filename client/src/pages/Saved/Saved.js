@@ -6,6 +6,7 @@ import API from "../../utils/API";
 import Nav from "../../components/Nav";
 import Container from "../../components/Container";
 import SubmitBtn from "../../components/SubmitBtn";
+import scrollToComponent from 'react-scroll-to-component';
 import "./Saved.css";
 
 class Saved extends Component {
@@ -130,6 +131,12 @@ class Saved extends Component {
                 display: false
             };
         });
+
+        setTimeout(() => {
+            scrollToComponent(this.savedImg, { offset: -15, align: 'top', duration: 1500, ease: "inOutCirc" })
+        }, 300);
+        
+
         this.setState({
             photos: display,
             colors: [],
@@ -250,7 +257,9 @@ class Saved extends Component {
                     <div className="wrapper">
                         {this.state.src ? (
                             <>
-                                <div className="savedImg">
+                                <div className="savedImg"
+                                    ref={(section) => { this.savedImg = section; }}
+                                >
                                     <img
                                         src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
                                         alt="#"

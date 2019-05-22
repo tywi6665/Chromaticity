@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import * as d3 from "d3";
 import "./Intro.css";
 
 // class Intro extends Component {
-
 function Canvas() {
     return (
-            <pre>
-                <canvas id="canvas" />
-            </pre>
+        <pre>
+            <canvas id="canvas" />
+        </pre>
     );
 };
 
@@ -28,7 +26,7 @@ function Intro(WrappedComponent) {
                 this.setState({
                     loading: false
                 });
-            }, 10000)
+            }, 7500)
         };
 
         animation() {

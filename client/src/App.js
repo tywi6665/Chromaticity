@@ -18,3 +18,4 @@ const App = () => (
 )
 
 export default Intro(App);
+// export default App;
