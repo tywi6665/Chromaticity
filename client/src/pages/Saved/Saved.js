@@ -248,19 +248,25 @@ class Saved extends Component {
                 </Container>
                 <Container>
                     <div className="wrapper">
-                        <div className="savedImg">
-                            <img
-                                src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
-                                alt="#"
-                            />
-                        </div>
-                        <ColorExtractor getColors={this.getColors}>
-                            <img
-                                className="savedImgDisplayNone"
-                                src={`https://cors-anywhere.herokuapp.com/https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
-                                alt="#"
-                            />
-                        </ColorExtractor>
+                        {this.state.src ? (
+                            <>
+                                <div className="savedImg">
+                                    <img
+                                        src={`https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
+                                        alt="#"
+                                    />
+                                </div>
+                                <ColorExtractor getColors={this.getColors}>
+                                    <img
+                                        className="savedImgDisplayNone"
+                                        src={`https://cors-anywhere.herokuapp.com/https://s3-us-west-1.amazonaws.com/bootcamp-project-3/${this.state.src}`}
+                                        alt="#"
+                                    />
+                                </ColorExtractor>
+                            </>
+                        ) : (
+                                <p className="ternary">Loading</p>
+                            )}
                         <div
                             className="swatchContainer"
                             onClick={this.toggleOn}
@@ -269,7 +275,7 @@ class Saved extends Component {
                             {this.state.colors.length ? (
                                 this.colorSwatches()
                             ) : (
-                                    <p className="extractingText">Extracting Colors</p>
+                                    <p className="ternary">Extracting Colors</p>
                                 )}
                         </div>
                     </div>
@@ -293,7 +299,7 @@ class Saved extends Component {
                                     )
                             ))
                         ) : (
-                                <p>Loading Images</p>
+                                <p className="ternary">Loading Images</p>
                             )
                         }
 
