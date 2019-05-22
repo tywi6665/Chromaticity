@@ -120,7 +120,6 @@ class Saved extends Component {
 
     imageClick = e => {
         const src = e.target.getAttribute("src").split("").splice(54).join("");
-        // console.log(src)
         const display = this.state.photos.map(photo => {
             if (photo.src !== src) return {
                 ...photo,
@@ -153,11 +152,7 @@ class Saved extends Component {
 
         function lookingUp(e) {
             compare(e.parentElement)
-        }
-
-        // function lookingDown(e) {
-        //     compare(e.children[0])
-        // }
+        };
     };
 
     hexToRgb(hex) {
@@ -247,7 +242,7 @@ class Saved extends Component {
                         </div> */}
                         <SubmitBtn
                             type="submit"
-                            disabled={!this.state.selectedFile && !this.state.previewImage}
+                            disabled={!this.state.fileList.length}
                         />
                     </form>
                 </Container>
