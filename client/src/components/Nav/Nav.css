@@ -59,3 +59,18 @@
     height: 20px;
     width: 20px;
 }
+
+.modalTitle {
+    position: relative;
+    font-weight: bold;
+}
+
+.modalTitle::after {
+    content: '';
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}

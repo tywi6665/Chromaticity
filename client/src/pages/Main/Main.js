@@ -16,11 +16,15 @@ class Main extends Component {
         hexSearch: "",
         hex: "",
         namedSearch: "",
-        navModal: "hohoho"
+        navModal: {
+            title: "It's time to delve into the world of color!",
+            pagePurpose: "Here you are presented with an color wheel, the likes of which would make skittles jealous. The purpose behind it and its interactivity is to make finding stock images of a particular color easier. ",
+            pageDirections: "Upon clicking anywhere on the color wheel, the form fields below it will be auto-filled with the color information of the clicked pixel. Hit the submit button, and then peruse the stock images that match your desired color."
+        }
     }
 
     componentDidMount() {
-        const color = "fb3d71"
+        const color = "000000"
         this.loadPhotos(color);
     };
 

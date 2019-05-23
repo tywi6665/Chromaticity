@@ -22,14 +22,16 @@ class Nav extends Component {
                     <li><Link to={"/main"}>Color Wheel</Link></li>
                     <li><Link to={"/saved"}>Saved Images</Link></li>
                 </ul>
-                {/* <Icon
+                <Icon
                     className="questionIcon"
                     type="question-circle"
                     onClick={() => this.setState({ modal: true })}
                 />
                 <Modal visible={this.state.modal} footer={null} onCancel={this.handleCancel}>
-                    <p alt="example" style={{ width: '100%' }}>{this.props.helpModal}</p>
-                </Modal> */}
+                    <p className="modalTitle" alt="example" style={{ width: '100%' }}>{this.props.helpModal.title}</p>
+                    <p alt="example" style={{ width: '100%' }}>{this.props.helpModal.pagePurpose}</p>
+                    <p alt="example" style={{ width: '100%' }}>{this.props.helpModal.pageDirections}</p>
+                </Modal>
             </nav>
         );
     };
