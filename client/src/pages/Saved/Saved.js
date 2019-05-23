@@ -90,7 +90,7 @@ class Saved extends Component {
 
         if (selectedFile) {
             API.uploadImage(selectedFile)
-                .then(res => console.log(res))
+                .then(res => this.downloadImages())
                 .catch(err => console.log(err))
         };
 
@@ -114,7 +114,7 @@ class Saved extends Component {
                 });
                 const src = keys[0].src;
                 keys[0].display = false
-                console.log(keys);
+                // console.log(keys);
                 return this.setState({ photos: keys, src: src })
             })
             .catch(err => console.log(err))
@@ -240,16 +240,6 @@ class Saved extends Component {
                         <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
                             <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
                         </Modal>
-                        {/* <div className="uploadWrapper">
-                            <button className="uploadButton">Upload a file</button>
-                            <input
-                                type="file"
-                                accept='.jpg, .png, .jpeg'
-                                onChange={this.handleFileUpload}
-                                name="sampleFile"
-                            />
-                            <label htmlFor="sampleFile"></label>
-                        </div> */}
                         <SubmitBtn
                             type="submit"
                             disabled={!this.state.fileList.length}
