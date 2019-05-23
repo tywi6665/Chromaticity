@@ -1,24 +1,19 @@
-nav {
+.nav {
     background-color: #EFEFEF;
     width: 100%;
     border-bottom-style: solid;
     border-color: lightgrey;
     border-width: 1px;
+    position: relative;
 }
 
-/* nav::after {
-    content:"";
-    display: table;
-    clear: both;
-} */
-
-nav ul {
+.nav ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-nav li {
+.nav li {
     display: inline-block;
     margin-left: 25px;
     padding-top: 25px;
@@ -26,17 +21,17 @@ nav li {
     position: relative;
 }
 
-nav a {
+.nav a {
     color: gray;
     text-decoration: none;
     font-size: 16px;
 }
 
-nav a:hover {
+.nav a:hover {
     color:#000;
 }
 
-nav a::before {
+.nav a::before {
     content: "";
     display: block;
     height: 15px;
@@ -49,6 +44,18 @@ nav a::before {
     transition: all ease-in-out 250ms;
 }
 
-nav a:hover::before {
+.nav a:hover::before {
     width: 100%;
+}
+
+.questionIcon {
+    position: absolute;
+    left: 90%;
+    top: 25px;
+    cursor: pointer;
+}
+
+.questionIcon svg {
+    height: 20px;
+    width: 20px;
 }

@@ -101,6 +101,11 @@
     padding-top: 15px;
 }
 
+.ternary p {
+    display: inline;
+    margin-right: 5px;
+}
+
 .colorList {
     list-style: none;
     position: absolute;

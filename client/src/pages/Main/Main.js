@@ -15,7 +15,8 @@ class Main extends Component {
         photos: [],
         hexSearch: "",
         hex: "",
-        namedSearch: ""
+        namedSearch: "",
+        navModal: "hohoho"
     }
 
     componentDidMount() {
@@ -53,7 +54,9 @@ class Main extends Component {
     render() {
         return (
             <div style={{ backgroundColor: this.state.hex }}>
-                <Nav />
+                <Nav
+                    helpModal={this.state.navModal}
+                />
                 <Container className="mainContent">
                     <Canvas
                         setColor={this.setColor}

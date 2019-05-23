@@ -26,7 +26,8 @@ class Saved extends Component {
             src: "",
             previewVisible: false,
             previewImage: "",
-            fileList: []
+            fileList: [],
+            navModal: "HeyHeyHey"
         };
 
         this.handleFileUpload = this.handleFileUpload.bind(this);
@@ -135,7 +136,7 @@ class Saved extends Component {
         setTimeout(() => {
             scrollToComponent(this.savedImg, { offset: -15, align: 'top', duration: 1500, ease: "inOutCirc" })
         }, 300);
-        
+
 
         this.setState({
             photos: display,
@@ -207,7 +208,9 @@ class Saved extends Component {
     render() {
         return (
             <Fragment>
-                <Nav />
+                <Nav
+                    helpModal={this.state.navModal}
+                />
                 <Container>
                     <form
                         className="savedForm"
@@ -274,7 +277,10 @@ class Saved extends Component {
                                 </ColorExtractor>
                             </>
                         ) : (
-                                <p className="ternary">Loading</p>
+                                <div className="ternary">
+                                    <p>Loading Image</p>
+                                    <Icon type="loading" />
+                                </div>
                             )}
                         <div
                             className="swatchContainer"
@@ -284,7 +290,10 @@ class Saved extends Component {
                             {this.state.colors.length ? (
                                 this.colorSwatches()
                             ) : (
-                                    <p className="ternary">Extracting Colors</p>
+                                    <div className="ternary">
+                                        <p>Extracting Colors</p>
+                                        <Icon type="loading" />
+                                    </div>
                                 )}
                         </div>
                     </div>
@@ -308,7 +317,10 @@ class Saved extends Component {
                                     )
                             ))
                         ) : (
-                                <p className="ternary">Loading Images</p>
+                                <div className="ternary">
+                                    <p>Loading Images</p>
+                                    <Icon type="loading" />
+                                </div>
                             )
                         }
 
