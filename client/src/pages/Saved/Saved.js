@@ -210,6 +210,7 @@ class Saved extends Component {
     };
 
     render() {
+        const colors = this.state.colors;
         return (
             <Fragment>
                 <Nav
@@ -250,7 +251,9 @@ class Saved extends Component {
                         />
                     </form>
                 </Container>
-                <Container>
+                <Container
+                    // style={{backgroundColor: `linear-gradient(to right, ${colors[0]}, ${colors[1]}, ${colors[2]}, ${colors[3]}, ${colors[4]}, ${colors[5]})`}}
+                >
                     <div className="wrapper">
                         {this.state.src ? (
                             <>

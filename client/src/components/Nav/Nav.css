@@ -34,12 +34,12 @@
 .nav a::before {
     content: "";
     display: block;
-    height: 15px;
+    height: 5px;
     border-radius: 10px;
     width: 100%;
     background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
     position: absolute;
-    top: 0;
+    top: 15px;
     width: 0%;
     transition: all ease-in-out 250ms;
 }
@@ -50,7 +50,7 @@
 
 .questionIcon {
     position: absolute;
-    left: 90%;
+    left: 91%;
     top: 25px;
     cursor: pointer;
 }

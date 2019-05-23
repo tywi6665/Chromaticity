@@ -26,6 +26,7 @@ function Intro(WrappedComponent) {
                 this.setState({
                     loading: false
                 });
+                d3.select("#canvas").remove();
             }, 7500)
         };
 

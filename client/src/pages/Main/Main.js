@@ -14,7 +14,7 @@ class Main extends Component {
     state = {
         photos: [],
         hexSearch: "",
-        hex: "",
+        hex: "#000000",
         namedSearch: "",
         navModal: {
             title: "It's time to delve into the world of color!",
