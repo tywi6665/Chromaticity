@@ -76,8 +76,8 @@ class Canvas extends Component {
     ColorWheel() {
         d3.select("#canvas").remove();
         var degreePerRadian = 180 / Math.PI;
-        const width = 0.45 * this.state.width;
-        const height = 0.45 * this.state.width;
+        const width = 0.40 * this.state.width;
+        const height = 0.40 * this.state.width;
 
         const canvas = d3.select("canvas")
             .attr("width", `${width}px`)

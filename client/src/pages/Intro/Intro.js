@@ -21,7 +21,6 @@ function Intro(WrappedComponent) {
                 width: window.innerWidth
             };
 
-            this.updateDimensions = this.updateDimensions.bind(this);
         };
 
         render() {
@@ -31,22 +30,12 @@ function Intro(WrappedComponent) {
 
         componentDidMount() {
             this.animation();
-            window.addEventListener("resize", this.updateDimensions);
             setTimeout(() => {
                 this.setState({
                     loading: false
                 });
                 d3.select("#canvas").remove();
             }, 5000)
-        };
-
-        updateDimensions() {
-            this.setState({ width: window.innerWidth })
-            this.animation()
-        };
-
-        componentWillUnmount() {
-            window.removeEventListener("resize", this.updateDimensions);
         };
 
         animation() {
