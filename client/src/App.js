@@ -17,5 +17,5 @@ const App = () => (
   </Router>
 )
 
-// export default Intro(App);
-export default App;
+export default Intro(App);
+// export default App;
