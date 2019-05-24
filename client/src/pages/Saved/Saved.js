@@ -7,6 +7,7 @@ import Nav from "../../components/Nav";
 import Container from "../../components/Container";
 import SubmitBtn from "../../components/SubmitBtn";
 import scrollToComponent from 'react-scroll-to-component';
+import shuffle from "lodash.shuffle";
 import "./Saved.css";
 
 class Saved extends Component {
@@ -116,10 +117,10 @@ class Saved extends Component {
                         display: true
                     });
                 });
-                const src = keys[0].src;
-                keys[0].display = false
-                // console.log(keys);
-                return this.setState({ photos: keys, src: src })
+                const shuffledKeys = shuffle(keys);
+                const src = shuffledKeys[0].src;
+                shuffledKeys[0].display = false
+                return this.setState({ photos: shuffledKeys, src: src })
             })
             .catch(err => console.log(err))
     };
