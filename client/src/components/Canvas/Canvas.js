@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import "./Canvas.css";
 import * as d3 from "d3";
+import { rgbToHsl } from "node-vibrant/lib/util";
 
 class Canvas extends Component {
     constructor() {
         super();
         this.state = {
-            hexSearch: "",
+            // hexSearch: "",
+            search: null,
             width: window.innerWidth
         };
         this.updateDimensions = this.updateDimensions.bind(this);
@@ -17,7 +19,7 @@ class Canvas extends Component {
 
         return (
             <pre>
-                <canvas onClick={() => this.props.setColor(this.state.hexSearch)} className="canvas u-full-width" id="canvas1" />
+                <canvas onClick={() => this.props.setColor(this.state.search)} className="canvas u-full-width" id="canvas1" />
             </pre>
         )
 
@@ -61,9 +63,14 @@ class Canvas extends Component {
 
             var context = this.getContext('2d');
             var pixelData = context.getImageData(eventLocation.x, eventLocation.y, 1, 1).data;
-
+            
             var hex = ("000000" + rgbToHex(pixelData[0], pixelData[1], pixelData[2])).slice(-6);
-            self.setState({ hexSearch: hex });
+            var rgb = `${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}`;
+            var search = {
+                hex: hex,
+                rgb: rgb
+            }
+            self.setState({ search: search });
         });
 
     };

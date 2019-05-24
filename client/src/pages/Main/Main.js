@@ -15,6 +15,7 @@ class Main extends Component {
         photos: [],
         hexSearch: "",
         hex: "#000000",
+        rgb: "0, 0, 0",
         namedSearch: "",
         navModal: {
             title: "It's time to delve into the world of color!",
@@ -35,10 +36,11 @@ class Main extends Component {
     };
 
     setColor = (color) => {
-        this.setState({ hexSearch: color, hex: ("#" + color) })
-        var namedColor = convert.hex.keyword(color);
-        console.log(namedColor);
-        this.setState({ namedSearch: namedColor })
+        var namedColor = convert.hex.keyword(color.hex);
+        this.setState({ hexSearch: color.hex, hex: ("#" + color.hex), rgb: color.rgb, namedSearch: namedColor })
+        
+        // console.log(namedColor);
+        // this.setState({ namedSearch: namedColor })
     };
 
     handleInputChange = event => {
@@ -72,6 +74,13 @@ class Main extends Component {
                             onChange={this.handleInputChange}
                             name="hexSearch"
                             placeholder="000000"
+                        />
+                        <h6>RGB Color</h6>
+                        <Card
+                            value={this.state.rgb}
+                            onChange={this.handleInputChange}
+                            name="rgb"
+                            placeholder="0, 0, 0"
                         />
                         <h6>Closest Named Color</h6>
                         <Card
