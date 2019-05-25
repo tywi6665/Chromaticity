@@ -101,6 +101,7 @@ class Saved extends Component {
 
         this.setState({
             previewImage: "",
+            colors: [],
             fileList: []
         })
 
@@ -117,10 +118,10 @@ class Saved extends Component {
                         display: true
                     });
                 });
-                const shuffledKeys = shuffle(keys);
-                const src = shuffledKeys[0].src;
-                shuffledKeys[0].display = false
-                return this.setState({ photos: shuffledKeys, src: src })
+                // const shuffledKeys = shuffle(keys);
+                const src = keys[0].src;
+                keys[0].display = false
+                return this.setState({ photos: keys, src: src })
             })
             .catch(err => console.log(err))
     };

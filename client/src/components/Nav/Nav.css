@@ -1,4 +1,4 @@
-.nav {
+nav {
     background-color: #EFEFEF;
     width: 100%;
     border-bottom-style: solid;
@@ -7,13 +7,13 @@
     position: relative;
 }
 
-.nav ul {
+nav ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.nav li {
+nav li {
     display: inline-block;
     margin-left: 25px;
     padding-top: 25px;
@@ -21,17 +21,17 @@
     position: relative;
 }
 
-.nav a {
+nav a {
     color: gray;
     text-decoration: none;
     font-size: 16px;
 }
 
-.nav a:hover {
+nav a:hover {
     color:#000;
 }
 
-.nav a::before {
+nav a::before {
     content: "";
     display: block;
     height: 5px;
@@ -44,7 +44,7 @@
     transition: all ease-in-out 250ms;
 }
 
-.nav a:hover::before {
+nav a:hover::before {
     width: 100%;
 }
 

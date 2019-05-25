@@ -17,7 +17,7 @@ class Nav extends Component {
 
     render() {
         return (
-            <nav className="nav">
+            <nav>
                 <ul>
                     <li><Link to={"/main"}>Color Wheel</Link></li>
                     <li><Link to={"/saved"}>Saved Images</Link></li>

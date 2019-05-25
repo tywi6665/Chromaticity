@@ -38,9 +38,6 @@ class Main extends Component {
     setColor = (color) => {
         var namedColor = convert.hex.keyword(color.hex);
         this.setState({ hexSearch: color.hex, hex: ("#" + color.hex), rgb: color.rgb, namedSearch: namedColor })
-        
-        // console.log(namedColor);
-        // this.setState({ namedSearch: namedColor })
     };
 
     handleInputChange = event => {
@@ -68,25 +65,25 @@ class Main extends Component {
                         setColor={this.setColor}
                     />
                     <form className="form">
-                        <h6>Hexidecimal Color Code</h6>
                         <Card
                             value={this.state.hexSearch}
                             onChange={this.handleInputChange}
                             name="hexSearch"
+                            label="Hexidecimal Color Code"
                             placeholder="000000"
                         />
-                        <h6>RGB Color</h6>
                         <Card
                             value={this.state.rgb}
                             onChange={this.handleInputChange}
                             name="rgb"
+                            label="RGB Color"
                             placeholder="0, 0, 0"
                         />
-                        <h6>Closest Named Color</h6>
                         <Card
                             value={this.state.namedSearch}
                             onChange={this.handleInputChange}
                             name="namedSearch"
+                            label="Closest Named Color"
                             placeholder="black"
                         />
                         <SubmitBtn
