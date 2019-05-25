@@ -5,7 +5,7 @@ import "../SubmitBtn";
 const Card = (props) => (
     <div className="card">
         <label className="label" htmlFor={props.name}>{props.label}</label>
-        <input className="u-full-width input" {...props} />
+        <input className="input" {...props} />
     </div>
 );
 

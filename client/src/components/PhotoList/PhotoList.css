@@ -1,7 +1,18 @@
 .photoList h3 {
     text-align: center;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.photoList h3::after {
+    content: '';
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
 }
 
 .image {
