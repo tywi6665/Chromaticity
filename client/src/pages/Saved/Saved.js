@@ -212,7 +212,7 @@ class Saved extends Component {
     };
 
     render() {
-        const colors = this.state.colors;
+        // const colors = this.state.colors;
         return (
             <Fragment>
                 <Nav
