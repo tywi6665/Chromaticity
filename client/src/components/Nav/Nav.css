@@ -1,15 +1,18 @@
 nav {
     background-color: #EFEFEF;
     width: 100%;
-    border-bottom-style: solid;
+    /* border-bottom-style: solid;
     border-color: lightgrey;
-    border-width: 1px;
+    border-width: 1px; */
     position: relative;
 }
 
 nav ul {
     background-color: #EFEFEF;
     width: 100%;
+    border-bottom-style: solid;
+    border-color: lightgrey;
+    border-width: 1px;
     margin: 0;
     padding: 0;
     list-style: none;
