@@ -9,9 +9,9 @@ import './App.css';
 const App = () => (
   <Router>
     <div>
-      {/* <Route render={({ location }) => {
+      <Route render={({ location }) => {
         const { pathname, key } = location;
-      
+
         return (
           <TransitionGroup component={null}>
             <Transition
@@ -19,15 +19,17 @@ const App = () => (
               appear={true}
               onEnter={(node, appears) => play(pathname, node, appears)}
               onExit={(node, appears) => exit(node, appears)}
-              timeout={{enter: 750, exit: 150}}
+              timeout={{ enter: 750, exit: 150 }}
+            >
+              <Switch location={location}>
+                <Route exact path="/" component={Main} />
+                <Route exact path="/main" component={Main} />
+                <Route exact path="/saved" component={Saved} />
+              </Switch>
+            </Transition>
           </TransitionGroup>
         )
-      }} /> */}
-      <Switch>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/main" component={Main} />
-        <Route exact path="/saved" component={Saved} />
-      </Switch>
+      }} />
     </div>
   </Router>
 )
