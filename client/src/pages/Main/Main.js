@@ -60,7 +60,7 @@ class Main extends Component {
                 <Nav
                     helpModal={this.state.navModal}
                 />
-                <Container className="mainContent">
+                <Container>
                     <Canvas
                         setColor={this.setColor}
                     />

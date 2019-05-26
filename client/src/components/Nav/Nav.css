@@ -9,13 +9,21 @@ nav {
 
 nav ul {
     background-color: #EFEFEF;
+    position: relative;
     width: 100%;
-    border-bottom-style: solid;
-    border-color: lightgrey;
-    border-width: 1px;
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+nav ul::after {
+    content: '';
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
 }
 
 nav li {

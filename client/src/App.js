@@ -4,6 +4,7 @@ import { Transition, TransitionGroup } from "react-transition-group";
 import Intro from "./pages/Intro";
 import Main from "./pages/Main";
 import Saved from "./pages/Saved";
+import { play, exit } from "./utils/timelines"
 import './App.css';
 
 const App = () => (
