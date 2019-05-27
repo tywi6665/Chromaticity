@@ -9,6 +9,7 @@ import SubmitBtn from "../../components/SubmitBtn";
 import scrollToComponent from 'react-scroll-to-component';
 import shuffle from "lodash.shuffle";
 import "./Saved.css";
+const convert = require('color-convert');
 
 class Saved extends Component {
 
@@ -119,8 +120,6 @@ class Saved extends Component {
                     });
                 });
                 if (this.state.photos) {
-                    const newKey = keys[keys.length - 1]
-                    console.log(newKey);
                     const newSrc = keys[keys.length - 1].src;
                     keys[keys.length - 1].display = false;
                     this.setState({ photos: keys, src: newSrc })
@@ -130,7 +129,6 @@ class Saved extends Component {
                     shuffledKeys[0].display = false;
                     this.setState({ photos: shuffledKeys, src: src })
                 }
-                // return this.setState({ photos: keys, src: src })
             })
             .catch(err => console.log(err))
     };
@@ -180,12 +178,15 @@ class Saved extends Component {
 
     hexToRgb(hex) {
         const color = hex.replace('#', '');
-        const r = parseInt(color.substring(0, 2), 16);
-        const g = parseInt(color.substring(2, 4), 16);
-        const b = parseInt(color.substring(4, 6), 16);
-        const result = `rgb (${r}, ${g}, ${b})`;
+        const rgb = convert.hex.rgb(color)
+        const result = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
         return result;
     };
+
+    namedColor(color) {
+        const namedColor = convert.hex.keyword(color);
+        return namedColor;
+    }
 
     colorSwatches = () => {
         const { colors } = this.state;
@@ -213,6 +214,7 @@ class Saved extends Component {
                         >
                             <li data-toggle="up">{color}</li>
                             <li data-toggle="up">{this.hexToRgb(color)}</li>
+                            <li data-toggle="up">{this.namedColor(color)}</li>
                         </ul>
                     </div>
                 </div>
