@@ -118,10 +118,19 @@ class Saved extends Component {
                         display: true
                     });
                 });
-                // const shuffledKeys = shuffle(keys);
-                const src = keys[0].src;
-                keys[0].display = false
-                return this.setState({ photos: keys, src: src })
+                if (this.state.photos) {
+                    const newKey = keys[keys.length - 1]
+                    console.log(newKey);
+                    const newSrc = keys[keys.length - 1].src;
+                    keys[keys.length - 1].display = false;
+                    this.setState({ photos: keys, src: newSrc })
+                } else {
+                    const shuffledKeys = shuffle(keys);
+                    const src = shuffledKeys[0].src;
+                    shuffledKeys[0].display = false;
+                    this.setState({ photos: shuffledKeys, src: src })
+                }
+                // return this.setState({ photos: keys, src: src })
             })
             .catch(err => console.log(err))
     };
@@ -254,7 +263,7 @@ class Saved extends Component {
                     </form>
                 </Container>
                 <Container
-                    // style={{backgroundColor: `linear-gradient(to right, ${colors[0]}, ${colors[1]}, ${colors[2]}, ${colors[3]}, ${colors[4]}, ${colors[5]})`}}
+                // style={{backgroundColor: `linear-gradient(to right, ${colors[0]}, ${colors[1]}, ${colors[2]}, ${colors[3]}, ${colors[4]}, ${colors[5]})`}}
                 >
                     <div className="wrapper">
                         {this.state.src ? (
