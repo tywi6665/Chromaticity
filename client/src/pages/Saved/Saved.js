@@ -11,6 +11,12 @@ import shuffle from "lodash.shuffle";
 import "./Saved.css";
 const convert = require('color-convert');
 
+// const borderStyle = {
+//     borderStyle: "solid",
+//     borderWidth: "1px",
+
+// }
+
 class Saved extends Component {
 
     constructor() {
@@ -123,12 +129,16 @@ class Saved extends Component {
                     const newSrc = keys[keys.length - 1].src;
                     keys[keys.length - 1].display = false;
                     this.setState({ photos: keys, src: newSrc })
+                    setTimeout(() => {
+                        scrollToComponent(this.savedImg, { offset: -15, align: 'top', duration: 1500, ease: "inOutCirc" })
+                    }, 100);
+
                 } else {
                     const shuffledKeys = shuffle(keys);
                     const src = shuffledKeys[0].src;
                     shuffledKeys[0].display = false;
                     this.setState({ photos: shuffledKeys, src: src })
-                }
+                };
             })
             .catch(err => console.log(err))
     };
