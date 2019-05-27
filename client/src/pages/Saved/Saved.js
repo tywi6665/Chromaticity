@@ -11,12 +11,6 @@ import shuffle from "lodash.shuffle";
 import "./Saved.css";
 const convert = require('color-convert');
 
-// const borderStyle = {
-//     borderStyle: "solid",
-//     borderWidth: "1px",
-
-// }
-
 class Saved extends Component {
 
     constructor() {

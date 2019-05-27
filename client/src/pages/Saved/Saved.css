@@ -32,6 +32,7 @@
 }
 
 .wrapper {
+    /* background-color: whitesmoke; */
     height: fit-content;
     width: 80%;
     display: flex;
