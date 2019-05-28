@@ -16,13 +16,13 @@ class Saved extends Component {
     constructor() {
         super();
 
-        this.setupReader();
+        // this.setupReader();
 
         this.state = {
             photos: null,
-            selectedFile: null,
-            imageBase64: "",
-            initialImageBase64: "",
+            // selectedFile: null,
+            // imageBase64: "",
+            // initialImageBase64: "",
             colors: [],
             keys: null,
             src: "",
@@ -34,11 +34,10 @@ class Saved extends Component {
                 pagePurpose: "Sometimes taking an image at face-value isn't good enough, and a deeper analysis is required. Knowing what single color dominates an image is nice, but what's even nicer is seeing the predominant color palette. This greater color understanding can be a powerful tool.",
                 pageDirections: "Here you have the option of uploading a local image file, or just looking at one of the already uploaded images below. If you do decide to upload one of your own images, it will be added to the overall collection for all to see. Click on an image and watch as its color palette is generated. Don't forget to click on the color palette tiles ;)"
             }
-            
         };
 
-        this.handleFileUpload = this.handleFileUpload.bind(this);
-    
+        // this.handleFileUpload = this.handleFileUpload.bind(this);
+
     };
 
     componentDidMount() {
@@ -51,35 +50,35 @@ class Saved extends Component {
         }));
     };
 
-    handleFileUpload = e => {
-        console.log(e.target.files[0]);
-        const selectedFile = e.target.files[0];
+    // handleFileUpload = e => {
+    //     console.log(e.target.files[0]);
+    //     const fileList = e.target.files[0];
 
-        if (selectedFile) {
-            this.setState({
-                selectedFile,
-                initialImageBase64: ""
-            });
+    //     if (fileList) {
+    //         this.setState({
+    //             fileList,
+    //             // initialImageBase64: ""
+    //         });
 
-            this.reader.readAsDataURL(selectedFile);
-        };
-    };
+    //         // this.reader.readAsDataURL(selectedFile);
+    //     };
+    // };
 
-    setupReader() {
-        this.reader = new FileReader();
+    // setupReader() {
+    //     this.reader = new FileReader();
 
-        this.reader.addEventListener('load', (event) => {
-            const { initialImageBase64 } = this.state;
+    //     this.reader.addEventListener('load', (event) => {
+    //         const { initialImageBase64 } = this.state;
 
-            const imageBase64 = event.target.result;
+    //         const imageBase64 = event.target.result;
 
-            if (initialImageBase64) {
-                this.setState({ imageBase64 });
-            } else {
-                this.setState({ imageBase64, initialImageBase64: imageBase64 });
-            }
-        });
-    };
+    //         if (initialImageBase64) {
+    //             this.setState({ imageBase64 });
+    //         } else {
+    //             this.setState({ imageBase64, initialImageBase64: imageBase64 });
+    //         }
+    //     });
+    // };
 
     handleChange = ({ fileList }) => this.setState({ fileList });
 
@@ -94,10 +93,10 @@ class Saved extends Component {
 
     handleFormSubmit = e => {
         e.preventDefault();
-        const { selectedFile } = this.state;
+        const { fileList } = this.state;
 
-        if (selectedFile) {
-            API.uploadImage(selectedFile)
+        if (fileList) {
+            API.uploadImage(fileList[0].originFileObj)
                 .then(res => this.downloadImages())
                 .catch(err => console.log(err))
         };
@@ -240,13 +239,13 @@ class Saved extends Component {
                         className="savedForm"
                         ref="uploadForm"
                         encType="multipart/form-data"
-                        onChange={this.handleFileUpload}
+                        // onChange={this.handleFileUpload}
                         onSubmit={this.handleFormSubmit}
                     >
                         <h6>Upload Photos</h6>
                         <Upload
                             className="Upload"
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             listType="picture-card"
                             fileList={this.state.fileList}
                             type="file"
@@ -339,7 +338,6 @@ class Saved extends Component {
                                 </div>
                             )
                         }
-
                     </div>
                 </Container>
             </Fragment>
