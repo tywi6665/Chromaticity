@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import "./Canvas.css";
 import * as d3 from "d3";
-import { rgbToHsl } from "node-vibrant/lib/util";
 
 class Canvas extends Component {
     constructor() {
         super();
         this.state = {
-            // hexSearch: "",
             search: null,
             width: window.innerWidth
         };
