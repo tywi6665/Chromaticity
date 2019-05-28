@@ -16,13 +16,8 @@ class Saved extends Component {
     constructor() {
         super();
 
-        // this.setupReader();
-
         this.state = {
             photos: null,
-            // selectedFile: null,
-            // imageBase64: "",
-            // initialImageBase64: "",
             colors: [],
             keys: null,
             src: "",
@@ -36,8 +31,6 @@ class Saved extends Component {
             }
         };
 
-        // this.handleFileUpload = this.handleFileUpload.bind(this);
-
     };
 
     componentDidMount() {
@@ -49,36 +42,6 @@ class Saved extends Component {
             colors: [...state.colors, ...colors]
         }));
     };
-
-    // handleFileUpload = e => {
-    //     console.log(e.target.files[0]);
-    //     const fileList = e.target.files[0];
-
-    //     if (fileList) {
-    //         this.setState({
-    //             fileList,
-    //             // initialImageBase64: ""
-    //         });
-
-    //         // this.reader.readAsDataURL(selectedFile);
-    //     };
-    // };
-
-    // setupReader() {
-    //     this.reader = new FileReader();
-
-    //     this.reader.addEventListener('load', (event) => {
-    //         const { initialImageBase64 } = this.state;
-
-    //         const imageBase64 = event.target.result;
-
-    //         if (initialImageBase64) {
-    //             this.setState({ imageBase64 });
-    //         } else {
-    //             this.setState({ imageBase64, initialImageBase64: imageBase64 });
-    //         }
-    //     });
-    // };
 
     handleChange = ({ fileList }) => this.setState({ fileList });
 
@@ -228,7 +191,6 @@ class Saved extends Component {
     };
 
     render() {
-        // const colors = this.state.colors;
         return (
             <Fragment>
                 <Nav
@@ -269,9 +231,7 @@ class Saved extends Component {
                         />
                     </form>
                 </Container>
-                <Container
-                // style={{backgroundColor: `linear-gradient(to right, ${colors[0]}, ${colors[1]}, ${colors[2]}, ${colors[3]}, ${colors[4]}, ${colors[5]})`}}
-                >
+                <Container>
                     <div className="wrapper">
                         {this.state.src ? (
                             <>

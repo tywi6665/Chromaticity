@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import * as d3 from "d3";
 import "./Intro.css";
 
-// class Intro extends Component {
 function Canvas() {
     return (
         <div className="introDiv">
