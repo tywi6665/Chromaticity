@@ -33,30 +33,11 @@ class Saved extends Component {
                 title: "Thank you for continuing your color journey!",
                 pagePurpose: "Sometimes taking an image at face-value isn't good enough, and a deeper analysis is required. Knowing what single color dominates an image is nice, but what's even nicer is seeing the predominant color palette. This greater color understanding can be a powerful tool.",
                 pageDirections: "Here you have the option of uploading a local image file, or just looking at one of the already uploaded images below. If you do decide to upload one of your own images, it will be added to the overall collection for all to see. Click on an image and watch as its color palette is generated. Don't forget to click on the color palette tiles ;)"
-            },
-            error: false,
-            hasMore: true,
-            isLoading: false
+            }
+            
         };
 
         this.handleFileUpload = this.handleFileUpload.bind(this);
-    
-        // window.onscroll = () => {
-        //     const {
-        //         state: {
-        //             error,
-        //             isLoading,
-        //             hasMore
-        //         },
-        //     } = this;
-
-        //     if (error || isLoading || !hasMore) return;
-
-        //     if (window.innerHeight + document.documentElement.scrollTop
-        //         === document.documentElement.offsetHeight) {
-        //             this.downloadImages();
-        //         }
-        // }
     
     };
 
